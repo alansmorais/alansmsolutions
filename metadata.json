@@ -1,0 +1,7 @@
+{
+  "name": "AlanSM Solutions",
+  "description": "AlanSM Solutions business automation, private booking systems, DeliveryHub ordering platforms, CRM workflows and digital systems.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

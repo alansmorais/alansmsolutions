@@ -1,0 +1,634 @@
+export const translations = {
+  pl: {
+    nav: {
+      solutions: 'Rozwiązania',
+      segments: 'Branże',
+      roi: 'Kalkulator ROI',
+      wizard: 'Kreator Projektu',
+      work: 'Realizacje',
+      contact: 'Skontaktuj się',
+      location: 'Kraków, Polska • Zdalnie',
+      email: 'kontakt@alansmsolutions.com',
+    },
+    hero: {
+      badge: 'Automatyzacja Biznesu & Nowoczesne Systemy Cyfrowe',
+      title1: 'Przestań tracić 20% na prowizjach.',
+      title2: 'Zautomatyzuj swój biznes już dziś.',
+      desc: 'Tworzymy niezależne systemy rezerwacji online, platformy zamówień DeliveryHub bez prowizji pośredników, procesy CRM oraz dedykowaną architekturę cyfrową dla rozwijających się firm.',
+      exploreBtn: 'Zobacz rozwiązania',
+      consultBtn: 'Umów konsultację',
+      stat1Title: 'Pełna Kontrola',
+      stat1Desc: '0% prowizji od sprzedaży',
+      stat2Title: 'Klasa Enterprise',
+      stat2Desc: 'Bezpieczne procesy CRM',
+      stat3Title: 'Lokalnie i Globalnie',
+      stat3Desc: 'Kraków, Polska & Obsługa zdalna',
+    },
+    roi: {
+      badge: 'Interaktywny Kalkulator ROI',
+      title: 'Ile kosztują Cię prowizje pośredników?',
+      desc: 'Sprawdź, ile pieniędzy zaoszczędzisz rocznie, zastępując zewnętrzne platformy rezerwacji i dostaw własnym, niezależnym systemem.',
+      monthlyRevLabel: 'Szacowany miesięczny przychód',
+      marketplaceFee: 'Standardowa prowizja portali (~20%):',
+      ourFee: 'Prowizja AlanSM Solutions:',
+      zeroCommission: '0 zł Prowizji (0%)',
+      annualSavings: 'Szacowane roczne oszczędności',
+      retained: 'Kwota, która co roku zostaje bezpośrednio w Twojej kieszeni.',
+      cta: 'Zbuduj system bez prowizji',
+    },
+    solutions: {
+      badge: 'Portfolio i Rozwiązania',
+      title: 'Zaprojektowane dla maksymalnej efektywności operacyjnej',
+      inquire: 'Zapytaj o ten system',
+      items: [
+        {
+          title: 'Strony i Portale Biznesowe',
+          desc: 'Szybkie strony internetowe, landing page oraz profesjonalne panele klienta.',
+          action: 'website'
+        },
+        {
+          title: 'Prywatny System Rezerwacji',
+          desc: 'Niezależne zapisy online dla salonów, klinik, dietetyków i ekspertów.',
+          action: 'light_booking'
+        },
+        {
+          title: 'Platforma DeliveryHub',
+          desc: 'Własny system zamówień online i logistyki dostaw bez prowizji portali.',
+          action: 'deliveryhub'
+        },
+        {
+          title: 'Systemy dla Gastronomii',
+          desc: 'Cyfrowe menu, zamówienia ze stolików oraz bezpośrednia baza klientów.',
+          action: 'deliveryhub'
+        },
+        {
+          title: 'Zlecenia i Serwis',
+          desc: 'Śledzenie statusu napraw i zleceń dla warsztatów i zespołów technicznych.',
+          action: 'automation'
+        },
+        {
+          title: 'Salesforce & Architektura CRM',
+          desc: 'Zaawansowane bazy danych, automatyzacje procesów i integracje (partnerstwo SOUBLOX).',
+          action: 'enterprise_crm'
+        }
+      ]
+    },
+    segments: {
+      badge: 'Dla Kogo Budujemy',
+      title: 'Dedykowane systemy dla kluczowych branż',
+      items: [
+        { title: 'Sklepy i Handel Detaliczny', desc: 'Kontrola magazynu, szybka sprzedaż i precyzyjne rozliczenia.' },
+        { title: 'Restauracje, Bary i Pizzerie', desc: 'Obsługa zamówień, zarządzanie dowozami i DeliveryHub bez prowizji.' },
+        { title: 'Winiarnie, Adegas i Sklepy Specjalistyczne', desc: 'Katalog produktów, zarządzanie dostawcami i automatyzacja sprzedaży.' },
+        { title: 'Kawiarnie i Piekarnie', desc: 'Błyskawiczna sprzedaż przy kasie i kontrola dziennego utargu.' },
+        { title: 'Sklepy Całodobowe & Convenience', desc: 'Skanowanie kodów, praca w trybie offline i szybkie uzupełnianie braków.' },
+        { title: 'Gabinety, Salony i Trenerzy', desc: 'Prywatny kalendarz rezerwacji, płatności online i przypomnienia SMS/WhatsApp.' },
+      ]
+    },
+    wizard: {
+      badge: 'Interaktywny Kreator Projektu',
+      title: 'Dobierz idealne rozwiązanie w 30 sekund',
+      desc: 'Odpowiedz na 2 proste pytania, aby otrzymać rekomendację skrojoną pod Twój model biznesowy.',
+      step1Title: 'Jaka jest główna branża Twojego biznesu?',
+      step2Title: 'Jaki jest Twój najważniejszy cel?',
+      stepLabel: 'Krok',
+      ofLabel: 'z',
+      step1Name: 'Wybór branży',
+      step2Name: 'Główny cel',
+      next: 'Dalej',
+      back: 'Wstecz',
+      complete: 'Zobacz rekomendowane rozwiązanie',
+      industries: [
+        { id: 'restaurant', label: 'Gastronomia / Pizzeria / Jedzenie', desc: 'Menu, zamówienia online i lokalne dowozy' },
+        { id: 'service', label: 'Salon / Terapeuta / Trener / Lekarz', desc: 'Prywatne rezerwacje i kalendarz wizyt' },
+        { id: 'professional', label: 'Firma Usługowa / Strona WWW', desc: 'Pozyskiwanie leadów i prestiżowy wizerunek' },
+        { id: 'enterprise', label: 'Enterprise / CRM / Procesy', desc: 'Salesforce, bazy danych i automatyzacje' },
+      ],
+      goals: [
+        { id: 'zero_commission', title: 'Wyeliminowanie wysokich prowizji portali', desc: 'Przyjmuj zamówienia lub rezerwacje bezpośrednio, nie oddając 20% pośrednikom.' },
+        { id: 'automation', title: 'Automatyzacja żmudnych zadań i wiadomości', desc: 'Oszczędzaj czas na ręcznym odpisywaniu, formularzach i powiadomieniach.' },
+        { id: 'brand', title: 'Wzmocnienie wizerunku i większa konwersja', desc: 'Pozyskuj więcej płacących klientów dzięki nowoczesnej i szybkiej stronie.' },
+      ]
+    },
+    work: {
+      badge: 'Doświadczenie i Wyniki',
+      title: 'Wybrane Realizacje i Projekty Partnerskie',
+      visit: 'Odwiedź stronę projektu',
+      projects: [
+        {
+          name: 'Joanna Filek',
+          role: 'Psychoterapeutka',
+          desc: 'Projekt platformy internetowej i UX, budujący zaufanie oraz ułatwiający bezpośredni kontakt z pacjentami.',
+          url: 'https://joannafilek.com/',
+          logo: 'https://joannafilek.com/images/logo.png',
+          isImageLogo: true,
+        },
+        {
+          name: 'Daniela Torp',
+          role: 'Intimacy Coach',
+          desc: 'Bezpieczny, prywatny system rezerwacji i konsultacji online gwarantujący pełną dyskrecję.',
+          url: 'https://she.alansmsolutions.com/',
+          isImageLogo: false,
+        },
+        {
+          name: 'Jessica Franco',
+          role: 'Nail Designer & Salon',
+          desc: 'Zautomatyzowany portal rezerwacyjny prezentujący portfolio prac i eliminujący ręczne odpisywanie w DM.',
+          url: 'https://jessicafranco.alansmsolutions.com/',
+          isImageLogo: false,
+        }
+      ]
+    },
+    contactModal: {
+      title: 'Wyślij wiadomość',
+      subtitle: 'Skontaktuj się z AlanSM Solutions',
+      regarding: 'Temat:',
+      nameLabel: 'Imię i Nazwisko',
+      namePlaceholder: 'Twoje Imię',
+      emailLabel: 'Adres E-mail',
+      emailPlaceholder: 'jan@firma.pl',
+      phoneLabel: 'Telefon / WhatsApp',
+      phonePlaceholder: '+48 ...',
+      msgLabel: 'Szczegóły projektu',
+      msgPlaceholder: 'Opisz krótko potrzeby Twojego biznesu...',
+      consent: 'Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na zapytanie ofertowe.',
+      submit: 'Wyślij wiadomość',
+      submitting: 'Wysyłanie...',
+      success: 'Wiadomość została wysłana pomyślnie. Skontaktujemy się wkrótce!',
+      error: 'Błąd podczas wysyłania. Prosimy spróbować ponownie lub napisać bezpośrednio na e-mail.',
+      warnConsent: 'Prosimy o zaznaczenie zgody na kontakt.',
+      warnWait: 'Prosimy odczekać chwilę przed wysłaniem formularza.',
+    },
+    footer: {
+      about: 'Automatyzacja procesów biznesowych, prywatne systemy rezerwacji, platformy DeliveryHub bez prowizji, konfiguracje CRM i infrastruktura IT dla małych firm i klientów zdalnych.',
+      navTitle: 'Nawigacja',
+      contactTitle: 'Kontakt i Lokalizacja',
+      available: 'Dostępny dla nowych projektów',
+      rights: 'Wszelkie prawa zastrzeżone.',
+      terms: 'Regulamin świadczenia usług',
+      privacy: 'Polityka prywatności',
+    }
+  },
+  en: {
+    nav: {
+      solutions: 'Solutions',
+      segments: 'Segments',
+      roi: 'ROI Calculator',
+      wizard: 'Project Wizard',
+      work: 'Work',
+      contact: 'Get in Touch',
+      location: 'Kraków, Poland • Remote',
+      email: 'kontakt@alansmsolutions.com',
+    },
+    hero: {
+      badge: 'Professional Business Automation & Digital Systems',
+      title1: 'Stop losing 20% on commissions.',
+      title2: 'Automate your business today.',
+      desc: 'We build private booking systems, zero-commission DeliveryHub ordering platforms, CRM workflows, and custom digital infrastructure for ambitious businesses worldwide.',
+      exploreBtn: 'Explore Solutions',
+      consultBtn: 'Request Consultation',
+      stat1Title: 'Direct Control',
+      stat1Desc: 'Zero marketplace fees',
+      stat2Title: 'Enterprise Grade',
+      stat2Desc: 'Secure CRM workflows',
+      stat3Title: 'Global & Local',
+      stat3Desc: 'Kraków, Poland & Remote',
+    },
+    roi: {
+      badge: 'Interactive ROI Calculator',
+      title: 'How much are commissions costing you?',
+      desc: 'See how much revenue you retain annually by replacing third-party booking or delivery platforms with your own custom system.',
+      monthlyRevLabel: 'Estimated Monthly Revenue',
+      marketplaceFee: 'Standard Marketplace Fee (~20%):',
+      ourFee: 'AlanSM Solution Fee:',
+      zeroCommission: '$0 Commission (0%)',
+      annualSavings: 'Estimated Annual Savings',
+      retained: 'Retained directly in your business every year.',
+      cta: 'Claim Your Zero-Commission System',
+    },
+    solutions: {
+      badge: 'Portfolio & Solutions',
+      title: 'Engineered for operational clarity',
+      inquire: 'Inquire about system',
+      items: [
+        {
+          title: 'Business Websites',
+          desc: 'High-performance sites, landing pages, and professional client portals.',
+          action: 'website'
+        },
+        {
+          title: 'Private Booking System',
+          desc: 'Direct reservations and scheduling for salons, clinics, and service professionals.',
+          action: 'light_booking'
+        },
+        {
+          title: 'DeliveryHub Platform',
+          desc: 'Direct ordering and local delivery coordination without commission fees.',
+          action: 'deliveryhub'
+        },
+        {
+          title: 'Restaurant Systems',
+          desc: 'Online ordering flows, menus, and customer control for the food sector.',
+          action: 'deliveryhub'
+        },
+        {
+          title: 'Service Order Tracking',
+          desc: 'Order and repair tracking for technical workshops and service teams.',
+          action: 'automation'
+        },
+        {
+          title: 'Salesforce & CRM Workflows',
+          desc: 'Advanced data architecture, native automation, and integrations (partnered with SOUBLOX).',
+          action: 'enterprise_crm'
+        }
+      ]
+    },
+    segments: {
+      badge: 'Target Segments',
+      title: 'Built for diverse business models',
+      items: [
+        { title: 'Markets & Retail', desc: 'Inventory control, fast checkout, and financial tracking.' },
+        { title: 'Restaurants & Bars', desc: 'Table management, kitchen display, and DeliveryHub orders.' },
+        { title: 'Wine Shops & Adegas', desc: 'Stock control by category, supplier management, and POS.' },
+        { title: 'Cafes & Bakeries', desc: 'Quick counter service, split bills, and daily cash flow.' },
+        { title: 'Convenience Stores', desc: 'Barcode scanning, offline resilience, and fast restocking.' },
+        { title: 'Service Providers & Salons', desc: 'Private booking portals, client intake, and automated reminders.' },
+      ]
+    },
+    wizard: {
+      badge: 'Interactive Project Wizard',
+      title: 'Find your ideal system in 30 seconds',
+      desc: 'Answer two quick questions to get an instant recommendation tailored to your business model.',
+      step1Title: 'What is your primary business type?',
+      step2Title: 'What is your main objective?',
+      stepLabel: 'Step',
+      ofLabel: 'of',
+      step1Name: 'Select Industry',
+      step2Name: 'Primary Goal',
+      next: 'Next Step',
+      back: 'Back',
+      complete: 'View Recommended Solution',
+      industries: [
+        { id: 'restaurant', label: 'Restaurant / Food Delivery', desc: 'Menus, orders & local dispatch' },
+        { id: 'service', label: 'Salon / Therapist / Coach', desc: 'Private booking & client intake' },
+        { id: 'professional', label: 'Agency / Business Website', desc: 'Lead gen & professional brand' },
+        { id: 'enterprise', label: 'Enterprise / CRM / Workflow', desc: 'Salesforce, data & automation' },
+      ],
+      goals: [
+        { id: 'zero_commission', title: 'Eliminate High Platform Commissions', desc: 'Take direct orders or bookings without losing 20% to aggregators.' },
+        { id: 'automation', title: 'Automate Manual Tasks & Follow-ups', desc: 'Save hours on repetitive admin, forms, WhatsApp notifications, and spreadsheets.' },
+        { id: 'brand', title: 'Upgrade Professional Web Presence', desc: 'Convert more visitors into paying clients with a high-performance modern website.' },
+      ]
+    },
+    work: {
+      badge: 'Track Record',
+      title: 'Featured Partner Projects',
+      visit: 'Visit Live Project',
+      projects: [
+        {
+          name: 'Joanna Filek',
+          role: 'Psychotherapist',
+          desc: 'Collaborative web development and UX project designed to elevate professional brand presence and client interaction.',
+          url: 'https://joannafilek.com/',
+          logo: 'https://joannafilek.com/images/logo.png',
+          isImageLogo: true,
+        },
+        {
+          name: 'Daniela Torp',
+          role: 'Intimacy Coach',
+          desc: 'Secure, private booking and consultation platform designed to offer absolute discretion for sensitive sessions.',
+          url: 'https://she.alansmsolutions.com/',
+          isImageLogo: false,
+        },
+        {
+          name: 'Jessica Franco',
+          role: 'Nail Designer',
+          desc: 'Automated booking portal that showcases portfolio work and handles appointments directly, eliminating manual DMs.',
+          url: 'https://jessicafranco.alansmsolutions.com/',
+          isImageLogo: false,
+        }
+      ]
+    },
+    contactModal: {
+      title: 'Send a Message',
+      subtitle: 'Get in touch with AlanSM Solutions',
+      regarding: 'Regarding:',
+      nameLabel: 'Full Name',
+      namePlaceholder: 'Your Name',
+      emailLabel: 'Email Address',
+      emailPlaceholder: 'you@company.com',
+      phoneLabel: 'Phone / WhatsApp',
+      phonePlaceholder: '+48 ...',
+      msgLabel: 'Project Details',
+      msgPlaceholder: 'Tell us about your project requirements...',
+      consent: 'I agree that my details may be used to respond to my inquiry and manage project communication.',
+      submit: 'Send Message',
+      submitting: 'Sending Message...',
+      success: 'Request sent successfully. We will be in touch shortly!',
+      error: 'Error sending message. Please try again or reach out via email.',
+      warnConsent: 'Please agree to the privacy terms.',
+      warnWait: 'Please wait a few seconds before submitting.',
+    },
+    footer: {
+      about: 'Business automation, private booking systems, DeliveryHub ordering platforms, CRM workflows, and digital systems for small businesses and remote clients.',
+      navTitle: 'Navigation',
+      contactTitle: 'Location & Contact',
+      available: 'Available for New Projects',
+      rights: 'All rights reserved.',
+      terms: 'Terms of Service',
+      privacy: 'Privacy Notice',
+    }
+  },
+  br: {
+    nav: {
+      solutions: 'Soluções',
+      segments: 'Segmentos',
+      roi: 'Calculadora ROI',
+      wizard: 'Assistente',
+      work: 'Projetos',
+      contact: 'Fale Conosco',
+      location: 'Kraków, Polônia • Remoto',
+      email: 'kontakt@alansmsolutions.com',
+    },
+    hero: {
+      badge: 'Automação Comercial & Sistemas Digitais',
+      title1: 'Pare de perder 20% em comissões.',
+      title2: 'Automatize seu negócio hoje.',
+      desc: 'Construímos sistemas próprios de agendamento, DeliveryHub sem taxas abusivas de aplicativos, fluxos de CRM e infraestrutura digital moderna para empresas em crescimento.',
+      exploreBtn: 'Explorar Soluções',
+      consultBtn: 'Solicitar Consultoria',
+      stat1Title: 'Controle Total',
+      stat1Desc: 'Zero taxas de marketplaces',
+      stat2Title: 'Nível Enterprise',
+      stat2Desc: 'Fluxos de CRM seguros',
+      stat3Title: 'Global e Local',
+      stat3Desc: 'Polônia & Atendimento Remoto',
+    },
+    roi: {
+      badge: 'Calculadora Interativa de ROI',
+      title: 'Quanto as comissões estão custando a você?',
+      desc: 'Veja quanto faturamento você economiza anualmente ao trocar plataformas de terceiros pelo seu próprio sistema.',
+      monthlyRevLabel: 'Faturamento Mensal Estimado',
+      marketplaceFee: 'Taxa Padrão de Marketplaces (~20%):',
+      ourFee: 'Taxa AlanSM Solutions:',
+      zeroCommission: 'R$ 0 de Comissão (0%)',
+      annualSavings: 'Economia Anual Estimada',
+      retained: 'Valor que fica 100% no seu caixa todos os anos.',
+      cta: 'Garanta Seu Sistema Sem Comissão',
+    },
+    solutions: {
+      badge: 'Portfólio & Soluções',
+      title: 'Projetado para máxima clareza operacional',
+      inquire: 'Consultar sobre este sistema',
+      items: [
+        { title: 'Sites & Portais Institucionais', desc: 'Sites de alta performance, landing pages e portais para clientes.', action: 'website' },
+        { title: 'Sistema Próprio de Agendamento', desc: 'Reservas diretas para clínicas, salões e profissionais autônomos.', action: 'light_booking' },
+        { title: 'Plataforma DeliveryHub', desc: 'Pedidos online diretos e despacho de entregas sem taxa por pedido.', action: 'deliveryhub' },
+        { title: 'Sistemas para Gastronomia', desc: 'Cardápio digital, controle de mesas e retenção direta de clientes.', action: 'deliveryhub' },
+        { title: 'Ordens de Serviço e Reparos', desc: 'Acompanhamento de ordens e manutenções para oficinas e suporte técnico.', action: 'automation' },
+        { title: 'Salesforce & Arquitetura CRM', desc: 'Estruturação de dados, automações nativas e integrações avançadas.', action: 'enterprise_crm' }
+      ]
+    },
+    segments: {
+      badge: 'Segmentos Atendidos',
+      title: 'Construído para diversos modelos de negócios',
+      items: [
+        { title: 'Mercados & Varejo', desc: 'Controle de estoque, PDV rápido e relatórios de fluxo de caixa.' },
+        { title: 'Restaurantes & Bares', desc: 'Gestão de mesas, pedidos e DeliveryHub próprio.' },
+        { title: 'Adegas & Bebidas', desc: 'Controle por categorias, fornecedores e vendas rápidas.' },
+        { title: 'Cafés & Padarias', desc: 'Atendimento ágil no balcão e fechamento de caixa diário.' },
+        { title: 'Conveniências', desc: 'Leitura de código de barras e operação offline estável.' },
+        { title: 'Clínicas, Salões & Coaches', desc: 'Agendamento privado, pagamentos e lembretes automáticos.' },
+      ]
+    },
+    wizard: {
+      badge: 'Assistente Interativo',
+      title: 'Descubra seu sistema ideal em 30 segundos',
+      desc: 'Responda a duas perguntas rápidas para receber uma recomendação sob medida.',
+      step1Title: 'Qual é o ramo principal do seu negócio?',
+      step2Title: 'Qual é o seu objetivo principal?',
+      stepLabel: 'Passo',
+      ofLabel: 'de',
+      step1Name: 'Escolha o ramo',
+      step2Name: 'Objetivo',
+      next: 'Próximo',
+      back: 'Voltar',
+      complete: 'Ver Solução Recomendada',
+      industries: [
+        { id: 'restaurant', label: 'Restaurante / Delivery / Alimentos', desc: 'Cardápios, pedidos e entregas locais' },
+        { id: 'service', label: 'Salão / Terapeuta / Consultor', desc: 'Agendamento direto e cadastro de clientes' },
+        { id: 'professional', label: 'Empresa / Site Profissional', desc: 'Geração de leads e presença digital' },
+        { id: 'enterprise', label: 'Enterprise / CRM / Automação', desc: 'Salesforce, dados e integrações' },
+      ],
+      goals: [
+        { id: 'zero_commission', title: 'Eliminar Altas Comissões de Plataformas', desc: 'Receba pedidos e reservas diretamente sem pagar 20% a intermediários.' },
+        { id: 'automation', title: 'Automatizar Tarefas Repetitivas', desc: 'Economize horas em planilhas, mensagens manuais e confirmações.' },
+        { id: 'brand', title: 'Modernizar a Presença Digital', desc: 'Converta mais visitantes em clientes pagantes com um site ultrarrápido.' },
+      ]
+    },
+    work: {
+      badge: 'Resultados & Histórico',
+      title: 'Projetos Parceiros em Destaque',
+      visit: 'Visitar Projeto Online',
+      projects: [
+        {
+          name: 'Joanna Filek',
+          role: 'Psicoterapeuta',
+          desc: 'Desenvolvimento web colaborativo e UX estruturado para elevar a autoridade profissional e o contato com pacientes.',
+          url: 'https://joannafilek.com/',
+          logo: 'https://joannafilek.com/images/logo.png',
+          isImageLogo: true,
+        },
+        {
+          name: 'Daniela Torp',
+          role: 'Intimacy Coach',
+          desc: 'Plataforma privada de agendamento e consultorias com total discrição e segurança.',
+          url: 'https://she.alansmsolutions.com/',
+          isImageLogo: false,
+        },
+        {
+          name: 'Jessica Franco',
+          role: 'Nail Designer',
+          desc: 'Portal automatizado que exibe portfólio e gerencia horários diretamente, dispensando conversas manuais.',
+          url: 'https://jessicafranco.alansmsolutions.com/',
+          isImageLogo: false,
+        }
+      ]
+    },
+    contactModal: {
+      title: 'Enviar Mensagem',
+      subtitle: 'Entre em contato com AlanSM Solutions',
+      regarding: 'Referente a:',
+      nameLabel: 'Nome Completo',
+      namePlaceholder: 'Seu Nome',
+      emailLabel: 'E-mail',
+      emailPlaceholder: 'seu@email.com',
+      phoneLabel: 'Telefone / WhatsApp',
+      phonePlaceholder: '+55 ... / +48 ...',
+      msgLabel: 'Detalhes do Projeto',
+      msgPlaceholder: 'Conte-nos sobre os requisitos do seu projeto...',
+      consent: 'Concordo que meus dados sejam usados para responder à solicitação e gerenciar o contato comercial.',
+      submit: 'Enviar Mensagem',
+      submitting: 'Enviando...',
+      success: 'Mensagem enviada com sucesso! Entraremos em contato em breve.',
+      error: 'Erro ao enviar. Por favor, tente novamente ou envie um e-mail direto.',
+      warnConsent: 'Por favor, marque a caixa de consentimento de privacidade.',
+      warnWait: 'Por favor, aguarde alguns segundos antes de enviar.',
+    },
+    footer: {
+      about: 'Automação de negócios, sistemas de agendamento, plataformas DeliveryHub sem comissão, CRM e infraestrutura digital para pequenas empresas e clientes remotos.',
+      navTitle: 'Navegação',
+      contactTitle: 'Localização & Contato',
+      available: 'Disponível para novos projetos',
+      rights: 'Todos os direitos reservados.',
+      terms: 'Termos de Serviço',
+      privacy: 'Aviso de Privacidade',
+    }
+  },
+  es: {
+    nav: {
+      solutions: 'Soluciones',
+      segments: 'Sectores',
+      roi: 'Calculadora ROI',
+      wizard: 'Asistente',
+      work: 'Proyectos',
+      contact: 'Contacto',
+      location: 'Cracovia, Polonia • Remoto',
+      email: 'kontakt@alansmsolutions.com',
+    },
+    hero: {
+      badge: 'Automatización Comercial & Sistemas Digitales',
+      title1: 'Deja de perder el 20% en comisiones.',
+      title2: 'Automatiza tu negocio hoy.',
+      desc: 'Desarrollamos sistemas propios de reservas, plataformas DeliveryHub sin comisiones, flujos de CRM e infraestructura digital a medida.',
+      exploreBtn: 'Ver Soluciones',
+      consultBtn: 'Solicitar Consulta',
+      stat1Title: 'Control Total',
+      stat1Desc: '0% comisiones a plataformas',
+      stat2Title: 'Nivel Enterprise',
+      stat2Desc: 'Procesos de CRM seguros',
+      stat3Title: 'Global y Local',
+      stat3Desc: 'Cracovia, Polonia & Remoto',
+    },
+    roi: {
+      badge: 'Calculadora Interactiva de ROI',
+      title: '¿Cuánto te están costando las comisiones?',
+      desc: 'Descubre cuánto dinero retienes anualmente reemplazando plataformas intermediarias por tu propio sistema.',
+      monthlyRevLabel: 'Ingresos Mensuales Estimados',
+      marketplaceFee: 'Comisión Habitual de Apps (~20%):',
+      ourFee: 'Comisión AlanSM Solutions:',
+      zeroCommission: '0 € Comisión (0%)',
+      annualSavings: 'Ahorro Anual Estimado',
+      retained: 'Dinero retenido directamente en tu empresa cada año.',
+      cta: 'Consigue tu sistema sin comisiones',
+    },
+    solutions: {
+      badge: 'Portafolio & Soluciones',
+      title: 'Diseñado para la máxima claridad operativa',
+      inquire: 'Consultar sobre el sistema',
+      items: [
+        { title: 'Sitios Web y Portales Corporativos', desc: 'Sitios de alto rendimiento, landing pages y portales para clientes.', action: 'website' },
+        { title: 'Sistema Privado de Reservas', desc: 'Citas directas para salones, clínicas y profesionales independientes.', action: 'light_booking' },
+        { title: 'Plataforma DeliveryHub', desc: 'Pedidos directos online y coordinación de envíos sin comisiones por pedido.', action: 'deliveryhub' },
+        { title: 'Sistemas para Restauración', desc: 'Menú digital, control de pedidos y fidelización directa de clientes.', action: 'deliveryhub' },
+        { title: 'Órdenes de Trabajo y Servicio', desc: 'Seguimiento de reparaciones y tareas para talleres y soporte técnico.', action: 'automation' },
+        { title: 'Salesforce & Flujos CRM', desc: 'Estructuración de datos, automatizaciones e integraciones avanzadas.', action: 'enterprise_crm' }
+      ]
+    },
+    segments: {
+      badge: 'Sectores Atendidos',
+      title: 'Construido para múltiples modelos de negocio',
+      items: [
+        { title: 'Mercados y Tiendas', desc: 'Control de inventario, cobro ágil y balance financiero.' },
+        { title: 'Restaurantes y Bares', desc: 'Gestión de mesas, comandas y DeliveryHub directo.' },
+        { title: 'Bodegas y Tiendas Gourmet', desc: 'Control por categorías, proveedores y ventas directas.' },
+        { title: 'Cafeterías y Panaderías', desc: 'Atención rápida en mostrador y cuadre de caja diario.' },
+        { title: 'Tiendas de Conveniencia', desc: 'Lector de código de barras y funcionamiento offline estable.' },
+        { title: 'Clínicas, Salones y Coaches', desc: 'Reservas privadas, cobros y recordatorios automáticos.' },
+      ]
+    },
+    wizard: {
+      badge: 'Asistente Interactivo de Proyectos',
+      title: 'Encuentra tu sistema ideal en 30 segundos',
+      desc: 'Responde dos preguntas sencillas para obtener una recomendación adaptada a tu modelo de negocio.',
+      step1Title: '¿Cuál es el sector principal de tu negocio?',
+      step2Title: '¿Cuál es tu objetivo principal?',
+      stepLabel: 'Paso',
+      ofLabel: 'de',
+      step1Name: 'Selecciona sector',
+      step2Name: 'Objetivo principal',
+      next: 'Siguiente',
+      back: 'Atrás',
+      complete: 'Ver Solución Recomendada',
+      industries: [
+        { id: 'restaurant', label: 'Restaurante / Delivery / Comida', desc: 'Menús, pedidos y reparto local' },
+        { id: 'service', label: 'Salón / Terapeuta / Entrenador', desc: 'Reservas privadas y agenda' },
+        { id: 'professional', label: 'Empresa / Web Corporativa', desc: 'Captación de clientes y marca' },
+        { id: 'enterprise', label: 'Enterprise / CRM / Procesos', desc: 'Salesforce, datos y automatización' },
+      ],
+      goals: [
+        { id: 'zero_commission', title: 'Eliminar Altas Comisiones de Plataformas', desc: 'Recibe pedidos o citas directamente sin ceder el 20% a intermediarios.' },
+        { id: 'automation', title: 'Automatizar Tareas Repetitivas', desc: 'Ahorra horas en gestión manual, hojas de cálculo y confirmaciones.' },
+        { id: 'brand', title: 'Elevar la Presencia y Conversión Web', desc: 'Convierte más visitas en clientes reales con una web moderna y rápida.' },
+      ]
+    },
+    work: {
+      badge: 'Resultados y Proyectos',
+      title: 'Proyectos Destacados',
+      visit: 'Visitar Proyecto',
+      projects: [
+        {
+          name: 'Joanna Filek',
+          role: 'Psicoterapeuta',
+          desc: 'Proyecto web colaborativo y de UX diseñado para proyectar solidez profesional y facilitar el contacto con pacientes.',
+          url: 'https://joannafilek.com/',
+          logo: 'https://joannafilek.com/images/logo.png',
+          isImageLogo: true,
+        },
+        {
+          name: 'Daniela Torp',
+          role: 'Intimacy Coach',
+          desc: 'Plataforma privada de reservas y consultas con absoluta discreción y seguridad.',
+          url: 'https://she.alansmsolutions.com/',
+          isImageLogo: false,
+        },
+        {
+          name: 'Jessica Franco',
+          role: 'Nail Designer',
+          desc: 'Portal automatizado que exhibe el portafolio y gestiona citas directamente sin depender de mensajes manuales.',
+          url: 'https://jessicafranco.alansmsolutions.com/',
+          isImageLogo: false,
+        }
+      ]
+    },
+    contactModal: {
+      title: 'Enviar un Mensaje',
+      subtitle: 'Contacta con AlanSM Solutions',
+      regarding: 'Asunto:',
+      nameLabel: 'Nombre Completo',
+      namePlaceholder: 'Tu Nombre',
+      emailLabel: 'Correo Electrónico',
+      emailPlaceholder: 'tu@empresa.com',
+      phoneLabel: 'Teléfono / WhatsApp',
+      phonePlaceholder: '+34 ... / +48 ...',
+      msgLabel: 'Detalles del Proyecto',
+      msgPlaceholder: 'Cuéntanos sobre los requerimientos de tu proyecto...',
+      consent: 'Acepto que mis datos se utilicen para responder a mi consulta y gestionar la comunicación del proyecto.',
+      submit: 'Enviar Mensaje',
+      submitting: 'Enviando...',
+      success: '¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.',
+      error: 'Error al enviar. Inténtalo de nuevo o escribe directamente por email.',
+      warnConsent: 'Por favor, acepta los términos de privacidad.',
+      warnWait: 'Por favor, espera unos segundos antes de enviar.',
+    },
+    footer: {
+      about: 'Automatización de negocios, sistemas de reservas, plataformas DeliveryHub sin comisiones, flujos CRM e infraestructura digital para empresas y clientes remotos.',
+      navTitle: 'Navegación',
+      contactTitle: 'Ubicación y Contacto',
+      available: 'Disponible para nuevos proyectos',
+      rights: 'Todos los derechos reservados.',
+      terms: 'Términos del Servicio',
+      privacy: 'Aviso de Privacidad',
+    }
+  }
+};
