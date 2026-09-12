@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Calculator, ArrowRight, TrendingUp } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Calculator, ArrowRight } from 'lucide-react';
 import { Language, Theme } from '../types';
 import { translations } from '../translations';
 
@@ -9,20 +9,81 @@ interface RoiCalculatorProps {
   onOpenContact: (pkg?: string, price?: string) => void;
 }
 
+interface CurrencyConfig {
+  min: number;
+  max: number;
+  step: number;
+  defaultVal: number;
+  format: (val: number) => string;
+  formatRate: (val: number) => string;
+  minLabel: string;
+  midLabel: string;
+  maxLabel: string;
+}
+
+const CURRENCY_CONFIGS: Record<Language, CurrencyConfig> = {
+  pl: {
+    min: 10000,
+    max: 200000,
+    step: 5000,
+    defaultVal: 20000,
+    format: (val) => val.toLocaleString('pl-PL') + ' zł',
+    formatRate: (val) => val.toLocaleString('pl-PL') + ' zł/mc',
+    minLabel: '10 000 zł/mc',
+    midLabel: '100 000 zł/mc',
+    maxLabel: '200 000+ zł/mc'
+  },
+  en: {
+    min: 2500,
+    max: 50000,
+    step: 1000,
+    defaultVal: 5000,
+    format: (val) => '$' + val.toLocaleString('en-US'),
+    formatRate: (val) => '$' + val.toLocaleString('en-US') + '/mo',
+    minLabel: '$2,500/mo',
+    midLabel: '$25,000/mo',
+    maxLabel: '$50,000+/mo'
+  },
+  br: {
+    min: 10000,
+    max: 200000,
+    step: 5000,
+    defaultVal: 20000,
+    format: (val) => 'R$ ' + val.toLocaleString('pt-BR'),
+    formatRate: (val) => 'R$ ' + val.toLocaleString('pt-BR') + '/mês',
+    minLabel: 'R$ 10.000/mês',
+    midLabel: 'R$ 100.000/mês',
+    maxLabel: 'R$ 200.000+/mês'
+  },
+  es: {
+    min: 2500,
+    max: 50000,
+    step: 1000,
+    defaultVal: 5000,
+    format: (val) => val.toLocaleString('es-ES') + ' €',
+    formatRate: (val) => val.toLocaleString('es-ES') + ' €/mes',
+    minLabel: '2.500 €/mes',
+    midLabel: '25.000 €/mes',
+    maxLabel: '50.000+ €/mes'
+  }
+};
+
 export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ currentLang, theme, onOpenContact }) => {
   const t = translations[currentLang]?.roi || translations.pl.roi;
   const isDark = theme === 'dark';
 
-  // In PLN (zł)
-  const [monthlyRevenue, setMonthlyRevenue] = useState<number>(20000);
+  const config = CURRENCY_CONFIGS[currentLang] || CURRENCY_CONFIGS.pl;
+
+  const [monthlyRevenue, setMonthlyRevenue] = useState<number>(config.defaultVal);
   const commissionRate = 0.20; // 20% marketplace commission
-  
+
+  // Synchronize dynamic defaults when language switches
+  useEffect(() => {
+    setMonthlyRevenue(config.defaultVal);
+  }, [currentLang, config.defaultVal]);
+
   const annualLoss = Math.round(monthlyRevenue * commissionRate * 12);
   const monthlyLoss = Math.round(monthlyRevenue * commissionRate);
-
-  const formatPLN = (val: number) => {
-    return val.toLocaleString('pl-PL') + ' zł';
-  };
 
   return (
     <section id="roi" className={`py-8 md:py-10 transition-colors border-y ${
@@ -58,14 +119,14 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ currentLang, theme
                 }`}>
                   {t.monthlyRevLabel}
                 </label>
-                <span className="text-base font-bold text-blue-500">{formatPLN(monthlyRevenue)}</span>
+                <span className="text-base font-bold text-blue-500">{config.format(monthlyRevenue)}</span>
               </div>
               <input 
                 id="revenueSlider"
                 type="range" 
-                min="10000" 
-                max="200000" 
-                step="5000" 
+                min={config.min} 
+                max={config.max} 
+                step={config.step} 
                 value={monthlyRevenue} 
                 onChange={(e) => setMonthlyRevenue(Number(e.target.value))}
                 className={`w-full accent-blue-600 h-2 rounded-lg cursor-pointer ${
@@ -75,9 +136,9 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ currentLang, theme
               <div className={`flex justify-between text-[10px] mt-1 ${
                 isDark ? 'text-slate-500' : 'text-slate-400'
               }`}>
-                <span>10 000 zł/mc</span>
-                <span>100 000 zł/mc</span>
-                <span>200 000+ zł/mc</span>
+                <span>{config.minLabel}</span>
+                <span>{config.midLabel}</span>
+                <span>{config.maxLabel}</span>
               </div>
             </div>
 
@@ -88,7 +149,7 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ currentLang, theme
                 isDark ? 'text-slate-400' : 'text-slate-600'
               }`}>
                 <span>{t.marketplaceFee}</span>
-                <span className="text-red-500 font-semibold">-{formatPLN(monthlyLoss)}/mc</span>
+                <span className="text-red-500 font-semibold">-{config.formatRate(monthlyLoss)}</span>
               </div>
               <div className={`flex items-center justify-between text-xs ${
                 isDark ? 'text-slate-400' : 'text-slate-600'
@@ -111,7 +172,7 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ currentLang, theme
               <div className={`text-3xl md:text-4xl font-extrabold tracking-tight my-1.5 ${
                 isDark ? 'text-white' : 'text-slate-900'
               }`}>
-                {formatPLN(annualLoss)}
+                {config.format(annualLoss)}
               </div>
               <p className={`text-[11px] ${
                 isDark ? 'text-slate-400' : 'text-slate-600'
@@ -122,7 +183,7 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ currentLang, theme
 
             <button 
               type="button"
-              onClick={() => onOpenContact('deliveryhub', `${formatPLN(annualLoss)} rocznych oszczędności`)}
+              onClick={() => onOpenContact('deliveryhub', `${config.format(annualLoss)} rocznych oszczędności`)}
               className="w-full inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-xl text-xs transition-colors shadow-xs"
             >
               {t.cta} <ArrowRight className="w-3.5 h-3.5" />

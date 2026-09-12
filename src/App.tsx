@@ -10,6 +10,9 @@ import { ClientSuccess } from './components/ClientSuccess';
 import { ContactModal } from './components/ContactModal';
 import { LegalModals } from './components/LegalModals';
 import { Footer } from './components/Footer';
+import { ProjectCaseStudy } from './components/ProjectCaseStudy';
+import { SolutionDetailView } from './components/SolutionDetailView';
+import { AdminDashboardModal } from './components/AdminDashboardModal';
 
 // Helper to determine initial language from URL path or param or storage
 const getInitialLanguage = (): Language => {
@@ -34,6 +37,30 @@ const getInitialLanguage = (): Language => {
   return 'pl';
 };
 
+// Helper to determine initial project from URL
+const getInitialProject = (): 'joanna-filek' | 'daniela-torp' | 'jessica-franco' | null => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const projectParam = params.get('project');
+    if (projectParam === 'joanna-filek' || projectParam === 'daniela-torp' || projectParam === 'jessica-franco') {
+      return projectParam;
+    }
+  }
+  return null;
+};
+
+// Helper to determine initial solution from URL
+const getInitialSolution = (): 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null => {
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const solutionParam = params.get('solution');
+    if (solutionParam === 'website' || solutionParam === 'booking' || solutionParam === 'deliveryhub' || solutionParam === 'restaurant' || solutionParam === 'tracking' || solutionParam === 'crm') {
+      return solutionParam;
+    }
+  }
+  return null;
+};
+
 // Language-specific dynamic SEO titles and meta tags
 const SEO_CONFIG: Record<Language, {
   title: string;
@@ -44,41 +71,43 @@ const SEO_CONFIG: Record<Language, {
   ogDesc: string;
 }> = {
   pl: {
-    title: 'AlanSM Solutions | Automatyzacja Biznesu, Systemy Rezerwacji i DeliveryHub Kraków',
-    desc: 'AlanSM Solutions tworzy niezależne systemy rezerwacji online, platformy zamówień DeliveryHub bez prowizji (0%), integracje CRM i automatyzacje dla firm.',
+    title: 'ASM Solutions | Automatyzacja Biznesu, Systemy Rezerwacji i DeliveryHub Kraków',
+    desc: 'ASM Solutions tworzy niezależne systemy rezerwacji online, platformy zamówień DeliveryHub bez prowizji (0%), integracje CRM i automatyzacje dla firm.',
     locale: 'pl_PL',
     canonical: 'https://alansmsolutions.com/',
-    ogTitle: 'AlanSM Solutions | Automatyzacja Biznesu i Systemy Cyfrowe',
+    ogTitle: 'ASM Solutions | Automatyzacja Biznesu i Systemy Cyfrowe',
     ogDesc: 'Zaoszczędź 20% prowizji. Niezależne systemy rezerwacji wizyt, platformy zamówień gastronomicznych bez pośredników i procesy CRM.'
   },
   en: {
-    title: 'AlanSM Solutions | Business Automation, Booking Systems & DeliveryHub Platforms',
-    desc: 'AlanSM Solutions builds independent online booking calendars, 0% commission DeliveryHub food ordering systems, CRM workflows, and digital solutions.',
+    title: 'ASM Solutions | Business Automation, Booking Systems & DeliveryHub Platforms',
+    desc: 'ASM Solutions builds independent online booking calendars, 0% commission DeliveryHub food ordering systems, CRM workflows, and digital solutions.',
     locale: 'en_US',
     canonical: 'https://alansmsolutions.com/?lang=en',
-    ogTitle: 'AlanSM Solutions | Business Automation & Digital Engineering',
+    ogTitle: 'ASM Solutions | Business Automation & Digital Engineering',
     ogDesc: 'Save 20% in marketplace fees. Custom online booking systems, direct food ordering without third parties, and automated CRM pipelines.'
   },
   br: {
-    title: 'AlanSM Solutions | Automação Comercial, Sistemas de Agendamento e DeliveryHub',
-    desc: 'AlanSM Solutions cria sistemas próprios de agendamento online, plataformas DeliveryHub sem comissões (taxa 0%), integrações CRM e automações para negócios.',
+    title: 'ASM Solutions | Automação Comercial, Sistemas de Agendamento e DeliveryHub',
+    desc: 'ASM Solutions cria sistemas próprios de agendamento online, plataformas DeliveryHub sem comissões (taxa 0%), integrações CRM e automações para negócios.',
     locale: 'pt_BR',
     canonical: 'https://alansmsolutions.com/?lang=br',
-    ogTitle: 'AlanSM Solutions | Automação e Sistemas Digitais',
+    ogTitle: 'ASM Solutions | Automação e Sistemas Digitais',
     ogDesc: 'Economize até 20% em taxas de marketplaces. Sistemas próprios de agendamento, plataformas de delivery direto e automação de processos.'
   },
   es: {
-    title: 'AlanSM Solutions | Automatización de Negocios, Sistemas de Reservas y DeliveryHub',
-    desc: 'AlanSM Solutions desarrolla sistemas privados de reservas online, plataformas de pedidos DeliveryHub sin comisiones (0%), CRM y automatizaciones empresariales.',
+    title: 'ASM Solutions | Automatización de Negocios, Sistemas de Reservas y DeliveryHub',
+    desc: 'ASM Solutions desarrolla sistemas privados de reservas online, plataformas de pedidos DeliveryHub sin comisiones (0%), CRM y automatizaciones empresariales.',
     locale: 'es_ES',
     canonical: 'https://alansmsolutions.com/?lang=es',
-    ogTitle: 'AlanSM Solutions | Automatización y Sistemas Digitales',
+    ogTitle: 'ASM Solutions | Automatización y Sistemas Digitales',
     ogDesc: 'Ahorre el 20% en comisiones de plataformas intermediarias. Sistemas propios de reservas, pedidos a domicilio directos y automatización CRM.'
   }
 };
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState<Language>(getInitialLanguage);
+  const [activeProject, setActiveProject] = useState<'joanna-filek' | 'daniela-torp' | 'jessica-franco' | null>(getInitialProject);
+  const [activeSolution, setActiveSolution] = useState<'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null>(getInitialSolution);
 
   const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem('user_theme') as Theme;
@@ -89,36 +118,167 @@ export default function App() {
   const [selectedPackage, setSelectedPackage] = useState<{ packageName: string; price: string } | null>(null);
   const [legalModalType, setLegalModalType] = useState<'terms' | 'privacy' | null>(null);
 
-  // Synchronize dynamic SEO meta tags whenever language changes
+  const [zohoEnabled, setZohoEnabled] = useState<boolean>(() => {
+    const saved = localStorage.getItem('zoho_enabled');
+    return saved === 'true'; // Default to false (hidden from client)
+  });
+  const [discountEnabled, setDiscountEnabled] = useState<boolean>(() => {
+    const saved = localStorage.getItem('global_discount_enabled');
+    return saved !== 'false'; // Default to true (as it was before)
+  });
+  const [adminDashboardOpen, setAdminDashboardOpen] = useState(false);
+
+  // Sync discount to storage
   useEffect(() => {
+    localStorage.setItem('global_discount_enabled', String(discountEnabled));
+  }, [discountEnabled]);
+
+  // Dynamically load/unload Zoho SalesIQ based on admin toggle
+  useEffect(() => {
+    localStorage.setItem('zoho_enabled', String(zohoEnabled));
+    if (zohoEnabled) {
+      if (typeof window !== 'undefined') {
+        const existing = document.getElementById('zoho-salesiq-script');
+        if (!existing) {
+          const script = document.createElement('script');
+          script.id = 'zoho-salesiq-script';
+          script.type = 'text/javascript';
+          script.innerHTML = `
+            var $zoho=$zoho || {};$zoho.salesiq=$zoho.salesiq||{widgetstatus:"show",values:{},ready:function(){}};
+            var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;
+            s.src="https://salesiq.zoho.eu/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);
+          `;
+          document.body.appendChild(script);
+        } else {
+          const $zoho = (window as any).$zoho;
+          if ($zoho && $zoho.salesiq && typeof $zoho.salesiq.show === 'function') {
+            $zoho.salesiq.show();
+          }
+        }
+      }
+    } else {
+      if (typeof window !== 'undefined') {
+        const $zoho = (window as any).$zoho;
+        if ($zoho && $zoho.salesiq && typeof $zoho.salesiq.hide === 'function') {
+          $zoho.salesiq.hide();
+        }
+        const script = document.getElementById('zoho-salesiq-script');
+        if (script) script.remove();
+        const zsiq = document.getElementById('zsiqscript');
+        if (zsiq) zsiq.remove();
+        const floatWidget = document.getElementById('zsiq_float');
+        if (floatWidget) floatWidget.remove();
+      }
+    }
+  }, [zohoEnabled]);
+
+  // Synchronize dynamic SEO meta tags whenever language, active project or active solution changes
+  useEffect(() => {
+    let title = '';
+    let desc = '';
     const seo = SEO_CONFIG[currentLang] || SEO_CONFIG.pl;
-    document.title = seo.title;
+
+    if (activeProject) {
+      const projectNames: Record<string, Record<Language, { title: string; desc: string }>> = {
+        'joanna-filek': {
+          pl: { title: 'Joanna Filek — Studium Przypadku | AlanSM Solutions', desc: 'Landing page i automatyczny prywatny kalendarz rezerwacji wizyt dla Joanny Filek.' },
+          en: { title: 'Joanna Filek — Case Study | AlanSM Solutions', desc: 'Custom business landing page and secure private booking system for Joanna Filek.' },
+          br: { title: 'Joanna Filek — Estudo de Caso | AlanSM Solutions', desc: 'Landing page exclusiva e motor de agendamentos para consultório de Joanna Filek.' },
+          es: { title: 'Joanna Filek — Caso de Estudio | AlanSM Solutions', desc: 'Sitio de consultoría profesional y sistema de reservas para Joanna Filek.' }
+        },
+        'daniela-torp': {
+          pl: { title: 'Daniela Torp — Studium Przypadku | AlanSM Solutions', desc: 'Szyfrowana i w pełni prywatna platforma rezerwacji konsultacji online dla Danieli Torp.' },
+          en: { title: 'Daniela Torp — Case Study | AlanSM Solutions', desc: 'Encrypted global booking checkout and anonymous counseling engine for Daniela Torp.' },
+          br: { title: 'Daniela Torp — Estudo de Caso | AlanSM Solutions', desc: 'Agendamentos privativos de alta segurança e checkout multimoedas para Daniela Torp.' },
+          es: { title: 'Daniela Torp — Caso de Estudio | AlanSM Solutions', desc: 'Pasarela internacional de reservas y consultas VIP anónimas para Daniela Torp.' }
+        },
+        'jessica-franco': {
+          pl: { title: 'Jessica Franco — Studium Przypadku | AlanSM Solutions', desc: 'Mobilny portal rezerwacji i portfolio beauty dla salonu Jessiki Franco.' },
+          en: { title: 'Jessica Franco — Case Study | AlanSM Solutions', desc: 'Mobile-first beauty scheduling, online deposits, and portfolio for Jessica Franco.' },
+          br: { title: 'Jessica Franco — Estudo de Caso | AlanSM Solutions', desc: 'Portal mobile e pagamentos de sinal para estúdio de Jessica Franco.' },
+          es: { title: 'Jessica Franco — Caso de Estudio | AlanSM Solutions', desc: 'Portal móvil, galería de fotos i señas integradas para Jessica Franco.' }
+        }
+      };
+      const projSeo = projectNames[activeProject]?.[currentLang] || projectNames[activeProject]?.pl;
+      if (projSeo) {
+        title = projSeo.title;
+        desc = projSeo.desc;
+      } else {
+        title = seo.title;
+        desc = seo.desc;
+      }
+    } else if (activeSolution) {
+      const solutionNames: Record<string, Record<Language, { title: string; desc: string }>> = {
+        'website': {
+          pl: { title: 'Strony i Portale Biznesowe | ASM Solutions', desc: 'Szybkie strony internetowe, landing page oraz profesjonalne panele klienta o bezkompromisowej szybkości i integracji.' },
+          en: { title: 'Business Websites & Portals | ASM Solutions', desc: 'Bespoke high-performance websites, landing pages, and interactive client portals.' },
+          br: { title: 'Páginas e Portais de Negócios | ASM Solutions', desc: 'Sites corporativos sob medida, landing pages otimizadas e portais de clientes dinâmicos de carregamento instantâneo.' },
+          es: { title: 'Páginas y Portales de Negocios | ASM Solutions', desc: 'Páginas web profesionales a medida, landing pages de alta conversión y portales de clientes integrados.' }
+        },
+        'booking': {
+          pl: { title: 'Prywatny System Rezerwacji | ASM Solutions', desc: 'Dedykowane systemy rezerwacji i kalendarze online bez prowizji pośredników. Pełna automatyzacja i kontrola terminów.' },
+          en: { title: 'Private Booking Systems | ASM Solutions', desc: 'Bespoke direct online booking systems and calendars with zero commission fees. Fully automated client scheduling and notifications.' },
+          br: { title: 'Sistema Privado de Reservas | ASM Solutions', desc: 'Sistemas próprios de agendamento online e calendários integrados sem comissões de terceiros. Automatize seus horários.' },
+          es: { title: 'Sistema Privado de Reservas | ASM Solutions', desc: 'Sistemas propios de reservas online y agendas interactivas sin comisiones de intermediarios. Automatización y control total.' }
+        },
+        'deliveryhub': {
+          pl: { title: 'Platforma DeliveryHub | ASM Solutions', desc: 'Własny system zamówień online i logistyki dostaw bez prowizji portali pośredniczących.' },
+          en: { title: 'DeliveryHub Platform | ASM Solutions', desc: 'Your own direct online ordering system and delivery dispatch workflow with zero marketplace commissions.' },
+          br: { title: 'Plataforma DeliveryHub | ASM Solutions', desc: 'Sistema próprio de pedidos online e gestão de entregas locais sem tarifas por pedido.' },
+          es: { title: 'Plataforma DeliveryHub | ASM Solutions', desc: 'Plataforma propia de pedidos directos a domicilio y despacho de entregas sin comisiones.' }
+        },
+        'restaurant': {
+          pl: { title: 'Systemy dla Gastronomii | ASM Solutions', desc: 'Wielofunkcyjne systemy restauracyjne: cyfrowe menu, zamówienia stolikowe, baza klientów i bezpośrednie płatności.' },
+          en: { title: 'Restaurant Systems | ASM Solutions', desc: 'Complete digital ecosystem for restaurants: digital menus, table-side ordering, guest retention, and direct checkouts.' },
+          br: { title: 'Sistemas para Restaurantes | ASM Solutions', desc: 'Sistemas completos para alimentação: cardápio QR code, pedidos em mesa, base de clientes própria e pagamentos diretos.' },
+          es: { title: 'Sistemas para Restauración | ASM Solutions', desc: 'Sistemas digitales para el sector gastronómico: menú interactivo QR, comandas de mesa, fidelización directa de clientes y pagos directos.' }
+        }
+      };
+      const solSeo = solutionNames[activeSolution]?.[currentLang] || solutionNames[activeSolution]?.pl;
+      if (solSeo) {
+        title = solSeo.title;
+        desc = solSeo.desc;
+      } else {
+        title = seo.title;
+        desc = seo.desc;
+      }
+    } else {
+      title = seo.title;
+      desc = seo.desc;
+    }
+
+    document.title = title;
     document.documentElement.lang = currentLang === 'br' ? 'pt-BR' : currentLang;
 
     // Update Meta Description
     let metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-      metaDesc.setAttribute('content', seo.desc);
+      metaDesc.setAttribute('content', desc);
     }
 
     // Update OpenGraph tags
     let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.setAttribute('content', seo.ogTitle);
+    if (ogTitle) ogTitle.setAttribute('content', (activeProject || activeSolution) ? title : seo.ogTitle);
 
     let ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) ogDesc.setAttribute('content', seo.ogDesc);
+    if (ogDesc) ogDesc.setAttribute('content', (activeProject || activeSolution) ? desc : seo.ogDesc);
 
     let ogLocale = document.querySelector('meta[property="og:locale"]');
     if (ogLocale) ogLocale.setAttribute('content', seo.locale);
 
     let canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute('href', seo.canonical);
-  }, [currentLang]);
+    if (canonical) {
+      const url = new URL(window.location.href);
+      canonical.setAttribute('href', url.origin + url.pathname + url.search);
+    }
+  }, [currentLang, activeProject, activeSolution]);
 
   // Synchronize URL query/path and back/forward navigation
   useEffect(() => {
     const handlePopState = () => {
       setCurrentLang(getInitialLanguage());
+      setActiveProject(getInitialProject());
+      setActiveSolution(getInitialSolution());
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -146,7 +306,10 @@ export default function App() {
       automation: 'Architektura i Automatyzacja Procesów',
       website: 'Strona WWW / Portal Biznesowy',
       enterprise_crm: 'Enterprise CRM & Salesforce',
-      offer: 'Konsultacja Wdrożeniowa'
+      offer: 'Konsultacja Wdrożeniowa',
+      landing_page: 'Prestiżowy Landing Page (Strony i Portale)',
+      business_website: 'Pełna Strona Biznesowa (Strony i Portale)',
+      enterprise_portal: 'Portal Klienta / Dedykowana Aplikacja'
     };
 
     setSelectedPackage({
@@ -154,6 +317,44 @@ export default function App() {
       price: price || ''
     });
     setContactModalOpen(true);
+  };
+
+  const handleSelectProject = (projectId: 'joanna-filek' | 'daniela-torp' | 'jessica-franco' | null) => {
+    setActiveProject(projectId);
+    if (projectId) {
+      setActiveSolution(null);
+    }
+    try {
+      const url = new URL(window.location.href);
+      if (projectId) {
+        url.searchParams.set('project', projectId);
+        url.searchParams.delete('solution');
+      } else {
+        url.searchParams.delete('project');
+      }
+      window.history.pushState({ lang: currentLang, project: projectId, solution: null }, '', url.toString());
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleSelectSolution = (solutionId: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null) => {
+    setActiveSolution(solutionId);
+    if (solutionId) {
+      setActiveProject(null);
+    }
+    try {
+      const url = new URL(window.location.href);
+      if (solutionId) {
+        url.searchParams.set('solution', solutionId);
+        url.searchParams.delete('project');
+      } else {
+        url.searchParams.delete('solution');
+      }
+      window.history.pushState({ lang: currentLang, project: null, solution: solutionId }, '', url.toString());
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleLanguageChange = (lang: Language) => {
@@ -168,7 +369,7 @@ export default function App() {
       } else {
         url.searchParams.set('lang', lang);
       }
-      window.history.pushState({ lang }, '', url.toString());
+      window.history.pushState({ lang, project: activeProject, solution: activeSolution }, '', url.toString());
     } catch (e) {
       console.error(e);
     }
@@ -187,43 +388,70 @@ export default function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
         onOpenContact={handleOpenContact} 
+        onOpenAdmin={() => setAdminDashboardOpen(true)}
+        activeSolution={activeSolution}
+        onSelectSolution={handleSelectSolution}
       />
 
       {/* Main Content */}
       <main className="space-y-6 md:space-y-8 pt-20 sm:pt-22 pb-8">
-        <Hero 
-          currentLang={currentLang}
-          theme={theme}
-          onOpenContact={handleOpenContact}
-        />
+        {activeProject ? (
+          <ProjectCaseStudy 
+            projectId={activeProject}
+            currentLang={currentLang}
+            theme={theme}
+            onBack={() => handleSelectProject(null)}
+            onOpenContact={handleOpenContact}
+          />
+        ) : activeSolution ? (
+          <SolutionDetailView 
+            solutionId={activeSolution}
+            currentLang={currentLang}
+            theme={theme}
+            onBack={() => handleSelectSolution(null)}
+            onOpenContact={handleOpenContact}
+            onSelectProject={handleSelectProject}
+            discountEnabled={discountEnabled}
+          />
+        ) : (
+          <>
+            <Hero 
+              currentLang={currentLang}
+              theme={theme}
+              onOpenContact={handleOpenContact}
+            />
 
-        <RoiCalculator 
-          currentLang={currentLang}
-          theme={theme}
-          onOpenContact={handleOpenContact}
-        />
+            <RoiCalculator 
+              currentLang={currentLang}
+              theme={theme}
+              onOpenContact={handleOpenContact}
+            />
 
-        <SolutionsBento 
-          currentLang={currentLang}
-          theme={theme}
-          onOpenContact={handleOpenContact}
-        />
+            <SolutionsBento 
+              currentLang={currentLang}
+              theme={theme}
+              onOpenContact={handleOpenContact}
+              onSelectSolution={handleSelectSolution}
+            />
 
-        <SegmentsSection 
-          currentLang={currentLang}
-          theme={theme}
-        />
+            <SegmentsSection 
+              currentLang={currentLang}
+              theme={theme}
+            />
 
-        <ProjectWizard 
-          currentLang={currentLang}
-          theme={theme}
-          onOpenContact={handleOpenContact}
-        />
+            <ProjectWizard 
+              currentLang={currentLang}
+              theme={theme}
+              onOpenContact={handleOpenContact}
+            />
 
-        <ClientSuccess 
-          currentLang={currentLang}
-          theme={theme}
-        />
+            <ClientSuccess 
+              currentLang={currentLang}
+              theme={theme}
+              onSelectProject={handleSelectProject}
+            />
+          </>
+        )}
       </main>
 
       {/* Footer */}
@@ -250,6 +478,18 @@ export default function App() {
         onClose={() => setLegalModalType(null)}
         currentLang={currentLang}
         theme={theme}
+      />
+
+      {/* Admin Dashboard Console Modal */}
+      <AdminDashboardModal 
+        isOpen={adminDashboardOpen}
+        onClose={() => setAdminDashboardOpen(false)}
+        theme={theme}
+        currentLang={currentLang}
+        zohoEnabled={zohoEnabled}
+        onToggleZoho={setZohoEnabled}
+        discountEnabled={discountEnabled}
+        onToggleDiscount={setDiscountEnabled}
       />
     </div>
   );

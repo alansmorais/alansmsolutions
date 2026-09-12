@@ -6,11 +6,28 @@ import { translations } from '../translations';
 interface ClientSuccessProps {
   currentLang: Language;
   theme: Theme;
+  onSelectProject: (projectId: 'joanna-filek' | 'daniela-torp' | 'jessica-franco') => void;
 }
 
-export const ClientSuccess: React.FC<ClientSuccessProps> = ({ currentLang, theme }) => {
+export const ClientSuccess: React.FC<ClientSuccessProps> = ({ currentLang, theme, onSelectProject }) => {
   const t = translations[currentLang]?.work || translations.pl.work;
   const isDark = theme === 'dark';
+
+  const studyLabels: Record<Language, string> = {
+    pl: 'Studium przypadku',
+    en: 'View Case Study',
+    br: 'Estudo de Caso',
+    es: 'Caso de Estudio'
+  };
+
+  const visitLabels: Record<Language, string> = {
+    pl: 'Link',
+    en: 'Link',
+    br: 'Link',
+    es: 'Enlace'
+  };
+
+  const projectIds: ('joanna-filek' | 'daniela-torp' | 'jessica-franco')[] = ['joanna-filek', 'daniela-torp', 'jessica-franco'];
 
   // Live real client project screenshots / visual mockups
   const projectVisuals = [
@@ -53,7 +70,10 @@ export const ClientSuccess: React.FC<ClientSuccessProps> = ({ currentLang, theme
                   : 'bg-white border-slate-200 hover:border-slate-300 shadow-xs'
               }`}
             >
-              <div>
+              <div 
+                onClick={() => onSelectProject(projectIds[idx])}
+                className="cursor-pointer"
+              >
                 {/* Visual Project Screenshot Header */}
                 <div className="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img 
@@ -104,21 +124,32 @@ export const ClientSuccess: React.FC<ClientSuccessProps> = ({ currentLang, theme
                 </div>
               </div>
 
-              <div className="p-4 pt-0">
+              <div className="p-4 pt-0 flex items-center justify-between gap-2 border-t border-slate-900/40 mt-1">
+                <button
+                  type="button"
+                  onClick={() => onSelectProject(projectIds[idx])}
+                  className={`text-xs font-bold flex items-center gap-1.5 transition-colors ${
+                    isDark ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'
+                  }`}
+                >
+                  <CheckCircle className="w-3.5 h-3.5" />
+                  {studyLabels[currentLang] || studyLabels.pl}
+                </button>
+
                 <a 
                   href={p.url} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className={`w-full inline-flex items-center justify-between text-xs font-semibold transition-colors pt-2.5 border-t ${
+                  onClick={(e) => e.stopPropagation()}
+                  className={`inline-flex items-center gap-1 text-[11px] font-semibold transition-colors ${
                     isDark 
-                      ? 'text-slate-300 hover:text-white border-slate-900' 
-                      : 'text-slate-600 hover:text-blue-600 border-slate-100'
+                      ? 'text-slate-400 hover:text-white' 
+                      : 'text-slate-500 hover:text-blue-600'
                   }`}
                 >
-                  <span className="flex items-center gap-1.5">
-                    <Globe className="w-3.5 h-3.5 text-blue-500" /> {t.visit}
-                  </span>
-                  <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <Globe className="w-3 h-3 text-blue-500" />
+                  {visitLabels[currentLang] || visitLabels.pl}
+                  <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
             </div>

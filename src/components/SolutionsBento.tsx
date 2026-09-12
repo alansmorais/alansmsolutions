@@ -7,13 +7,22 @@ interface SolutionsBentoProps {
   currentLang: Language;
   theme: Theme;
   onOpenContact: (pkg?: string, price?: string) => void;
+  onSelectSolution?: (solutionId: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm') => void;
 }
 
-export const SolutionsBento: React.FC<SolutionsBentoProps> = ({ currentLang, theme, onOpenContact }) => {
+export const SolutionsBento: React.FC<SolutionsBentoProps> = ({ currentLang, theme, onOpenContact, onSelectSolution }) => {
   const t = translations[currentLang]?.solutions || translations.pl.solutions;
   const isDark = theme === 'dark';
 
   const icons = [Globe, Calendar, Bike, Utensils, Receipt, Cpu];
+
+  const detailsLabels: Record<Language, string> = {
+    pl: 'Zobacz ofertę',
+    en: 'View offer details',
+    br: 'Ver detalhes',
+    es: 'Ver detalles'
+  };
+
   
   // High quality relevant visuals for each solution
   const solutionImages = [
@@ -70,7 +79,19 @@ export const SolutionsBento: React.FC<SolutionsBentoProps> = ({ currentLang, the
           return (
             <div 
               key={idx}
+              onClick={() => {
+                if (onSelectSolution) {
+                  if (idx === 0) onSelectSolution('website');
+                  else if (idx === 1) onSelectSolution('booking');
+                  else if (idx === 2) onSelectSolution('deliveryhub');
+                  else if (idx === 3) onSelectSolution('restaurant');
+                  else if (idx === 4) onSelectSolution('tracking');
+                  else if (idx === 5) onSelectSolution('crm');
+                }
+              }}
               className={`border rounded-xl overflow-hidden flex flex-col justify-between transition-all hover:-translate-y-0.5 group ${
+                onSelectSolution ? 'cursor-pointer' : ''
+              } ${
                 isDark 
                   ? 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700' 
                   : 'bg-white border-slate-200 hover:border-slate-300 shadow-xs'
@@ -106,14 +127,47 @@ export const SolutionsBento: React.FC<SolutionsBentoProps> = ({ currentLang, the
               </div>
 
               <div className="px-4 pb-4">
-                <button
-                  type="button"
-                  onClick={() => onOpenContact(item.action, 'custom_quote')}
-                  className="w-full text-xs font-semibold text-blue-500 hover:text-blue-600 inline-flex items-center justify-between transition-colors pt-2.5 border-t border-slate-800/40"
-                >
-                  <span>{t.inquire}</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
+                {onSelectSolution ? (
+                  <div className="flex items-center justify-between gap-3 pt-2.5 border-t border-slate-850">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (idx === 0) onSelectSolution('website');
+                        else if (idx === 1) onSelectSolution('booking');
+                        else if (idx === 2) onSelectSolution('deliveryhub');
+                        else if (idx === 3) onSelectSolution('restaurant');
+                        else if (idx === 4) onSelectSolution('tracking');
+                        else if (idx === 5) onSelectSolution('crm');
+                      }}
+                      className="text-xs font-bold text-blue-500 hover:text-blue-600 inline-flex items-center gap-1 transition-colors"
+                    >
+                      <span>{detailsLabels[currentLang] || detailsLabels.pl}</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onOpenContact(item.action, 'custom_quote');
+                      }}
+                      className={`text-[11px] font-semibold transition-colors ${
+                        isDark ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-950'
+                      }`}
+                    >
+                      {t.inquire}
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => onOpenContact(item.action, 'custom_quote')}
+                    className="w-full text-xs font-semibold text-blue-500 hover:text-blue-600 inline-flex items-center justify-between transition-colors pt-2.5 border-t border-slate-800/40"
+                  >
+                    <span>{t.inquire}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                )}
               </div>
             </div>
           );

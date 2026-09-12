@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Globe, ArrowRight, Instagram, Facebook, Linkedin, Mail, MapPin, Sun, Moon } from 'lucide-react';
+import { Menu, X, Globe, ArrowRight, Instagram, Facebook, Linkedin, Mail, MapPin, Sun, Moon, Shield, ChevronDown, Monitor, Calendar, Bike, Utensils, Receipt, Cpu } from 'lucide-react';
 import { Language, Theme } from '../types';
 import { translations } from '../translations';
 
@@ -9,6 +9,9 @@ interface NavbarProps {
   theme: Theme;
   onToggleTheme: () => void;
   onOpenContact: (pkg?: string, price?: string) => void;
+  onOpenAdmin: () => void;
+  activeSolution: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null;
+  onSelectSolution: (solutionId: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -16,12 +19,65 @@ export const Navbar: React.FC<NavbarProps> = ({
   onLanguageChange,
   theme,
   onToggleTheme,
-  onOpenContact
+  onOpenContact,
+  onOpenAdmin,
+  activeSolution,
+  onSelectSolution
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [demosOpen, setDemosOpen] = useState(false);
   const t = translations[currentLang]?.nav || translations.pl.nav;
 
   const isDark = theme === 'dark';
+
+  const demoLabels: Record<Language, { trigger: string; items: Record<string, string> }> = {
+    pl: {
+      trigger: 'Systemy Live (Dema)',
+      items: {
+        website: '1. Portale i Strony WWW',
+        booking: '2. Prywatny System Rezerwacji',
+        deliveryhub: '3. Logistyka DeliveryHub',
+        restaurant: '4. System dla Gastronomii',
+        tracking: '5. Panel Śledzenia Serwisu',
+        crm: '6. Salesforce CRM Console'
+      }
+    },
+    en: {
+      trigger: 'Live Portals (Demos)',
+      items: {
+        website: '1. Web Portals & Sites',
+        booking: '2. Private Booking System',
+        deliveryhub: '3. DeliveryHub Logistics',
+        restaurant: '4. Restaurant Dining System',
+        tracking: '5. Repair Status Tracker',
+        crm: '6. Salesforce CRM Console'
+      }
+    },
+    br: {
+      trigger: 'Portais Live (Demos)',
+      items: {
+        website: '1. Portais e Páginas Web',
+        booking: '2. Sistema de Agendamento',
+        deliveryhub: '3. Logística DeliveryHub',
+        restaurant: '4. Sistema para Restaurantes',
+        tracking: '5. Painel de Ordens e Serviços',
+        crm: '6. Console CRM Salesforce'
+      }
+    },
+    es: {
+      trigger: 'Portales en Vivo (Demos)',
+      items: {
+        website: '1. Portales y Sitios Web',
+        booking: '2. Sistema de Reservas',
+        deliveryhub: '3. Logística DeliveryHub',
+        restaurant: '4. Sistema de Restaurantes',
+        tracking: '5. Rastreo de Reparaciones',
+        crm: '6. Consola CRM Salesforce'
+      }
+    }
+  };
+
+  const currentDemos = demoLabels[currentLang] || demoLabels.pl;
 
   return (
     <header className={`fixed top-0 inset-x-0 z-50 transition-colors duration-200 ${
@@ -115,6 +171,23 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </>
               )}
             </button>
+
+            <span className={isDark ? 'text-slate-700' : 'text-slate-300'}>•</span>
+
+            {/* Admin trigger button */}
+            <button
+              type="button"
+              onClick={onOpenAdmin}
+              className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold transition-all ${
+                isDark
+                  ? 'bg-blue-950/40 hover:bg-blue-900/40 text-blue-400 border border-blue-800/40'
+                  : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200'
+              }`}
+              title="Admin Console / Panel Sterowania"
+            >
+              <Shield className="w-3 h-3 text-blue-500 fill-blue-500/20" />
+              <span>Admin</span>
+            </button>
           </div>
         </div>
       </div>
@@ -142,6 +215,39 @@ export const Navbar: React.FC<NavbarProps> = ({
         <nav className={`hidden md:flex items-center gap-5 text-xs font-medium ${
           isDark ? 'text-slate-300' : 'text-slate-700'
         }`}>
+          {/* Dropdown for Demos / Live Portals */}
+          <div className="relative">
+            <button
+              onClick={() => setDemosOpen(!demosOpen)}
+              className="flex items-center gap-1 font-bold text-blue-500 hover:text-blue-600 transition-colors"
+            >
+              <span>{currentDemos.trigger}</span>
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+            {demosOpen && (
+              <div className={`absolute left-0 mt-2.5 w-60 rounded-xl border p-2 shadow-xl z-100 ${
+                isDark ? 'bg-slate-950 border-slate-800 text-slate-100' : 'bg-white border-slate-200 text-slate-900'
+              }`}>
+                {(Object.keys(currentDemos.items) as Array<keyof typeof currentDemos.items>).map((key) => (
+                  <button
+                    key={key}
+                    onClick={() => {
+                      onSelectSolution(key as any);
+                      setDemosOpen(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 ${
+                      activeSolution === key
+                        ? 'bg-blue-500/10 text-blue-500 font-bold'
+                        : isDark ? 'hover:bg-slate-900 text-slate-300' : 'hover:bg-slate-50 text-slate-700'
+                    }`}
+                  >
+                    <span>{currentDemos.items[key]}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           <a href="#solutions" className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-blue-600'}`}>{t.solutions}</a>
           <a href="#segments" className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-blue-600'}`}>{t.segments}</a>
           <a href="#roi" className={`transition-colors ${isDark ? 'hover:text-white' : 'hover:text-blue-600'}`}>{t.roi}</a>
@@ -217,6 +323,29 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a href="#wizard" onClick={() => setMobileMenuOpen(false)} className={`block text-xs font-medium ${isDark ? 'text-slate-300 hover:text-white' : 'text-slate-700 hover:text-blue-600'}`}>{t.wizard}</a>
           <a href="#work" onClick={() => setMobileMenuOpen(false)} className={`block text-xs font-medium ${isDark ? 'text-slate-300 hover:text-white' : 'text-slate-700 hover:text-blue-600'}`}>{t.work}</a>
           
+          {/* Mobile Demos List */}
+          <div className="pt-2.5 border-t border-slate-800/40 space-y-1">
+            <span className="text-[9px] uppercase font-bold text-blue-500 tracking-wider block mb-1">
+              {currentDemos.trigger}
+            </span>
+            {(Object.keys(currentDemos.items) as Array<keyof typeof currentDemos.items>).map((key) => (
+              <button
+                key={key}
+                onClick={() => {
+                  onSelectSolution(key as any);
+                  setMobileMenuOpen(false);
+                }}
+                className={`w-full text-left py-1.5 text-xs font-semibold block transition-colors ${
+                  activeSolution === key
+                    ? 'text-blue-500 font-bold'
+                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                {currentDemos.items[key]}
+              </button>
+            ))}
+          </div>
+
           <div className={`pt-2.5 border-t flex items-center justify-between ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
             <div className="flex items-center gap-2 text-xs font-semibold">
               <button onClick={() => { onLanguageChange('pl'); setMobileMenuOpen(false); }} className={currentLang === 'pl' ? 'text-blue-500 font-bold' : isDark ? 'text-slate-400' : 'text-slate-600'}>PL</button>
