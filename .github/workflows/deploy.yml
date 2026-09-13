@@ -1,0 +1,44 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Build Application
+        run: npm run build
+        env:
+          VITE_ZOHO_ENABLED: false # Default for build safety
+
+      # Placeholder for Deployment - Customize based on your provider
+      # Example for Google Cloud Run:
+      # - name: Google Auth
+      #   uses: 'google-github-actions/auth@v2'
+      #   with:
+      #     credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+      #
+      # - name: Deploy to Cloud Run
+      #   uses: 'google-github-actions/deploy-cloudrun@v2'
+      #   with:
+      #     service: 'alansm-solutions'
+      #     region: 'europe-west2'
+      #     source: './'

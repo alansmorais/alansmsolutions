@@ -1,16 +1,19 @@
 import React from 'react';
 import { X } from 'lucide-react';
-import { Theme } from '../types';
+import { Theme, Language } from '../types';
+import { translations } from '../translations';
 
 interface LegalModalProps {
   type: 'terms' | 'privacy' | null;
   theme: Theme;
   onClose: () => void;
+  currentLang: Language;
 }
 
-export const LegalModals: React.FC<LegalModalProps> = ({ type, theme, onClose }) => {
+export const LegalModals: React.FC<LegalModalProps> = ({ type, theme, onClose, currentLang }) => {
   if (!type) return null;
   const isDark = theme === 'dark';
+  const t = translations[currentLang]?.legal || translations.pl.legal;
 
   return (
     <div className="fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4">
@@ -34,25 +37,25 @@ export const LegalModals: React.FC<LegalModalProps> = ({ type, theme, onClose })
 
         {type === 'terms' ? (
           <div className={`space-y-3 text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-            <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>Ostatnia aktualizacja: Czerwiec 2026</p>
-            <p>AlanSM Solutions świadczy usługi tworzenia systemów cyfrowych, stron internetowych, platform DeliveryHub, automatyzacji procesów oraz wdrożeń systemów CRM. Szczegółowy zakres prac jest zawsze potwierdzany w pisemnej umowie lub zleceniu.</p>
-            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>1. Wycena i Zakres Prac</h4>
-            <p>Ceny prezentowane na stronie mają charakter orientacyjny. Ostateczna wycena ustalana jest indywidualnie na podstawie specyfikacji technicznej.</p>
-            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>2. Odpowiedzialność i Współpraca</h4>
-            <p>Klient zobowiązuje się do dostarczenia niezbędnych materiałów, treści i dostępów w celu terminowej realizacji projektu.</p>
-            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>3. Gwarancja i Dostępność</h4>
-            <p>Dostarczamy sprawdzone, nowoczesne rozwiązania zgodne z najlepszymi praktykami inżynierii oprogramowania.</p>
+            <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>{t.lastUpdate}</p>
+            <p>{t.termsIntro}</p>
+            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{t.termsSection1Title}</h4>
+            <p>{t.termsSection1Content}</p>
+            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{t.termsSection2Title}</h4>
+            <p>{t.termsSection2Content}</p>
+            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{t.termsSection3Title}</h4>
+            <p>{t.termsSection3Content}</p>
           </div>
         ) : (
           <div className={`space-y-3 text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
-            <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>Ostatnia aktualizacja: Czerwiec 2026</p>
-            <p>AlanSM Solutions / Alan da Silva Morais szanuje Twoją prywatność i dba o bezpieczeństwo przekazywanych danych osobowych.</p>
-            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>1. Gromadzone Dane</h4>
-            <p>Dane kontaktowe (imię, adres e-mail, telefon, opis projektu) są zbierane wyłącznie w celu przygotowania oferty i kontaktu w sprawie projektu.</p>
-            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>2. Bezpieczeństwo Danych</h4>
-            <p>Twoje dane nie są odsprzedawane ani przekazywane podmiotom trzecim w celach marketingowych.</p>
-            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>3. Prawa Użytkownika</h4>
-            <p>W każdej chwili masz prawo do wglądu, poprawienia lub usunięcia swoich danych kontaktując się na kontakt@alansmsolutions.com.</p>
+            <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>{t.lastUpdate}</p>
+            <p>{t.privacyIntro}</p>
+            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{t.privacySection1Title}</h4>
+            <p>{t.privacySection1Content}</p>
+            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{t.privacySection2Title}</h4>
+            <p>{t.privacySection2Content}</p>
+            <h4 className={`font-bold mt-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>{t.privacySection3Title}</h4>
+            <p>{t.privacySection3Content}</p>
           </div>
         )}
 
@@ -64,7 +67,7 @@ export const LegalModals: React.FC<LegalModalProps> = ({ type, theme, onClose })
               isDark ? 'bg-slate-800 hover:bg-slate-700 text-white' : 'bg-slate-200 hover:bg-slate-300 text-slate-900'
             }`}
           >
-            Zamknij
+            {t.close}
           </button>
         </div>
       </div>

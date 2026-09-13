@@ -473,7 +473,6 @@ export default function App() {
 
       {/* Legal & Privacy Modals */}
       <LegalModals 
-        isOpen={legalModalType !== null}
         type={legalModalType}
         onClose={() => setLegalModalType(null)}
         currentLang={currentLang}
