@@ -151,6 +151,20 @@ export const translations = {
           role: 'Nail Designer & Salon',
           url: 'https://jessicafranco.alansmsolutions.com/',
           isImageLogo: false,
+        },
+        {
+          name: 'Litoral em Movimento',
+          role: 'Turystyka',
+          url: 'https://www.litoralemmovimento.alansmsolutions.com/',
+          logo: 'https://www.litoralemmovimento.alansmsolutions.com/images/logo.jpg',
+          isImageLogo: true,
+        },
+        {
+          name: 'Salão da Michelly',
+          role: 'Salão de Beleza & Reservas',
+          url: 'https://www.salaodamichelly.alansmsolutions.com/',
+          logo: 'https://raw.githubusercontent.com/alansmorais/salaomichelly/refs/heads/main/Michelly%20Salon/images/Michelly_Rose-Gold_Salon_Logo.png',
+          isImageLogo: true,
         }
       ]
     },
@@ -336,6 +350,20 @@ export const translations = {
           role: 'Nail Designer',
           url: 'https://jessicafranco.alansmsolutions.com/',
           isImageLogo: false,
+        },
+        {
+          name: 'Litoral em Movimento',
+          role: 'Tourism',
+          url: 'https://www.litoralemmovimento.alansmsolutions.com/',
+          logo: 'https://www.litoralemmovimento.alansmsolutions.com/images/logo.jpg',
+          isImageLogo: true,
+        },
+        {
+          name: 'Salão da Michelly',
+          role: 'Beauty Salon & Booking',
+          url: 'https://www.salaodamichelly.alansmsolutions.com/',
+          logo: 'https://raw.githubusercontent.com/alansmorais/salaomichelly/refs/heads/main/Michelly%20Salon/images/Michelly_Rose-Gold_Salon_Logo.png',
+          isImageLogo: true,
         }
       ]
     },
@@ -497,6 +525,20 @@ export const translations = {
           role: 'Nail Designer',
           url: 'https://jessicafranco.alansmsolutions.com/',
           isImageLogo: false,
+        },
+        {
+          name: 'Litoral em Movimento',
+          role: 'Turismo',
+          url: 'https://www.litoralemmovimento.alansmsolutions.com/',
+          logo: 'https://www.litoralemmovimento.alansmsolutions.com/images/logo.jpg',
+          isImageLogo: true,
+        },
+        {
+          name: 'Salão da Michelly',
+          role: 'Salão de Beleza & Reservas',
+          url: 'https://www.salaodamichelly.alansmsolutions.com/',
+          logo: 'https://raw.githubusercontent.com/alansmorais/salaomichelly/refs/heads/main/Michelly%20Salon/images/Michelly_Rose-Gold_Salon_Logo.png',
+          isImageLogo: true,
         }
       ]
     },
@@ -658,6 +700,20 @@ export const translations = {
           role: 'Nail Designer',
           url: 'https://jessicafranco.alansmsolutions.com/',
           isImageLogo: false,
+        },
+        {
+          name: 'Litoral em Movimento',
+          role: 'Turismo',
+          url: 'https://www.litoralemmovimento.alansmsolutions.com/',
+          logo: 'https://www.litoralemmovimento.alansmsolutions.com/images/logo.jpg',
+          isImageLogo: true,
+        },
+        {
+          name: 'Salão da Michelly',
+          role: 'Salón de Belleza & Reservas',
+          url: 'https://www.salaodamichelly.alansmsolutions.com/',
+          logo: 'https://raw.githubusercontent.com/alansmorais/salaomichelly/refs/heads/main/Michelly%20Salon/images/Michelly_Rose-Gold_Salon_Logo.png',
+          isImageLogo: true,
         }
       ]
     },

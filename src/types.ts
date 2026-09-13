@@ -16,3 +16,9 @@ export interface LeadFormData {
   estimatedPrice: string;
   message: string;
 }
+
+export interface Lead extends LeadFormData {
+  id: string;
+  timestamp: string;
+  status: 'new' | 'contacted' | 'completed';
+}

@@ -2362,9 +2362,11 @@ export const SolutionDetailView: React.FC<SolutionDetailViewProps> = ({
   };
 
   const projectReferences = [
-    { id: 'joanna-filek' as const, name: 'Joanna Filek', role: 'Psychoterapeuta', img: 'https://joannafilek.com/images/joanna.png', url: 'https://joannafilek.com/' },
-    { id: 'daniela-torp' as const, name: 'Daniela Torp', role: 'Intimacy Coach', img: 'https://www.danielatorp.cz/wp-content/uploads/2020/05/untitled-design-7.jpg', url: 'https://she.alansmsolutions.com/' },
-    { id: 'jessica-franco' as const, name: 'Jessica Franco', role: 'Nail Designer', img: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600&auto=format&fit=crop', url: 'https://jessicafranco.alansmsolutions.com/' }
+    { id: 'joanna-filek' as const, name: 'Joanna Filek', role: 'Psychoterapeuta', img: 'https://joannafilek.com/images/joanna.png', url: 'https://joannafilek.com/', isLogo: true },
+    { id: 'daniela-torp' as const, name: 'Daniela Torp', role: 'Intimacy Coach', img: 'https://www.danielatorp.cz/wp-content/uploads/2020/05/untitled-design-7.jpg', url: 'https://she.alansmsolutions.com/', isLogo: false },
+    { id: 'jessica-franco' as const, name: 'Jessica Franco', role: 'Nail Designer', img: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600&auto=format&fit=crop', url: 'https://jessicafranco.alansmsolutions.com/', isLogo: false },
+    { id: 'litoral-em-movimento' as const, name: 'Litoral em Movimento', role: 'Turystyka', img: 'https://www.litoralemmovimento.alansmsolutions.com/images/logo.jpg', url: 'https://www.litoralemmovimento.alansmsolutions.com/', isLogo: true },
+    { id: 'salao-da-michelly' as const, name: 'Salão da Michelly', role: 'Salão de Beleza & Reservas', img: 'https://raw.githubusercontent.com/alansmorais/salaomichelly/refs/heads/main/Michelly%20Salon/images/Michelly_Rose-Gold_Salon_Logo.png', url: 'https://www.salaodamichelly.alansmsolutions.com/', isLogo: true }
   ];
 
   return (
@@ -2676,15 +2678,16 @@ export const SolutionDetailView: React.FC<SolutionDetailViewProps> = ({
                   : 'bg-white border-slate-200 hover:border-slate-300 shadow-3xs'
               }`}
             >
-              <div className="relative h-24 w-full overflow-hidden bg-slate-900">
-                <img 
-                  src={ref.img} 
-                  alt={ref.name} 
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className={`absolute inset-0 bg-gradient-to-t ${
-                  isDark ? 'from-slate-950 via-slate-950/40' : 'from-white via-white/30'
-                }`} />
+              {/* Round Frame Reference */}
+              <div className="pt-6 pb-2 flex justify-center">
+                <div className="w-20 h-20 rounded-full overflow-hidden relative border-4 border-white dark:border-slate-800 shadow-xl group-hover:scale-105 transition-transform duration-500 bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-700">
+                  <img 
+                    src={ref.img} 
+                    alt={ref.name} 
+                    className="w-full h-full object-cover transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
               </div>
               <div className="p-3">
                 <h4 className={`text-xs font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>

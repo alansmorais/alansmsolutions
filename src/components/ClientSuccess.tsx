@@ -44,6 +44,16 @@ export const ClientSuccess: React.FC<ClientSuccessProps> = ({ currentLang, theme
       previewImg: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600&auto=format&fit=crop',
       alt: 'Jessica Franco Nail Designer & Salon portal rezerwacyjny',
       tag: 'Beauty & Portfolio',
+    },
+    {
+      previewImg: 'https://www.litoralemmovimento.alansmsolutions.com/images/logo.jpg',
+      alt: 'Litoral em Movimento - Tourism',
+      tag: 'Tourism',
+    },
+    {
+      previewImg: 'https://raw.githubusercontent.com/alansmorais/salaomichelly/refs/heads/main/Michelly%20Salon/images/Michelly_Rose-Gold_Salon_Logo.png',
+      alt: 'Salão da Michelly - Beauty Salon',
+      tag: 'Beauty',
     }
   ];
 
@@ -75,22 +85,17 @@ export const ClientSuccess: React.FC<ClientSuccessProps> = ({ currentLang, theme
                 rel="noopener noreferrer"
                 className="block"
               >
-                {/* Visual Project Screenshot Header */}
-                <div className="relative h-36 w-full overflow-hidden bg-slate-900">
-                  <img 
-                    src={visual?.previewImg} 
-                    alt={visual?.alt || `${p.name} - ${p.role}`} 
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${
-                    isDark ? 'from-slate-950 via-slate-950/30 to-transparent' : 'from-white via-white/20 to-transparent'
-                  }`} />
-                  
-                  {/* Category Pill on top of image */}
-                  <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-950/80 text-white backdrop-blur-md border border-white/10 shadow-xs">
-                    {visual?.tag}
+                {/* Round Frame Project Visual */}
+                <div className="pt-8 pb-4 flex justify-center">
+                  <div className="w-32 h-32 rounded-full overflow-hidden relative border-4 border-white/80 dark:border-slate-800 shadow-2xl group-hover:scale-105 transition-transform duration-500 bg-white dark:bg-slate-900 ring-1 ring-slate-200 dark:ring-slate-700">
+                    <img 
+                      src={visual?.previewImg || p.logo} 
+                      alt={visual?.alt || `${p.name} - ${p.role}`} 
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 </div>
 

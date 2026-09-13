@@ -78,6 +78,22 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
     try {
       const scriptUrl = (import.meta as any).env.VITE_CONTACT_API_URL || 'https://script.google.com/macros/s/AKfycbyqSx9ThK0tfEuGeSay0jJATaA_ZiUeoj-Ag_gEtvG94mMNX_s0z_A4H2CI4_Oql2ynDg/exec';
+      
+      // Save locally first for the dashboard
+      const newLead = {
+        id: Math.random().toString(36).substr(2, 9),
+        timestamp: new Date().toISOString(),
+        name,
+        email,
+        phone,
+        packageName: initialPackage?.packageName || 'Zapytanie ogólne',
+        estimatedPrice: initialPackage?.price || '',
+        message,
+        status: 'new'
+      };
+      const existingLeads = JSON.parse(localStorage.getItem('website_leads') || '[]');
+      localStorage.setItem('website_leads', JSON.stringify([newLead, ...existingLeads]));
+
       await fetch(scriptUrl, {
         method: 'POST',
         mode: 'no-cors',
