@@ -106,12 +106,9 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
 
   const handleGoogleLogin = async () => {
     try {
-      const result = await googleSignIn();
-      if (result) {
-        setAuthUser(result.user);
-        setAccessToken(result.accessToken);
-        setIsInternalLoggedIn(true);
-      }
+      // Store flag to reopen modal after redirect
+      sessionStorage.setItem('asm_reopen_admin', 'true');
+      await googleSignIn();
     } catch (error) {
       console.error('Google Sign-in failed:', error);
     }

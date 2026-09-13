@@ -126,6 +126,11 @@ export default function App() {
       (user, token) => {
         setAuthUser(user);
         setAccessToken(token);
+        // Check if we need to reopen the dashboard after redirect
+        if (sessionStorage.getItem('asm_reopen_admin') === 'true') {
+          setAdminDashboardOpen(true);
+          sessionStorage.removeItem('asm_reopen_admin');
+        }
       },
       () => {
         setAuthUser(null);
