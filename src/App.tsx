@@ -13,8 +13,6 @@ import { Footer } from './components/Footer';
 import { SolutionDetailView } from './components/SolutionDetailView';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { FloatingContact } from './components/FloatingContact';
-import { initAuth } from './lib/firebase';
-import { User } from 'firebase/auth';
 
 // Helper to determine initial language from URL path or param or storage
 const getInitialLanguage = (): Language => {
@@ -117,29 +115,6 @@ export default function App() {
   });
   const [adminDashboardOpen, setAdminDashboardOpen] = useState(false);
   
-  // Auth State for Google Sheets
-  const [authUser, setAuthUser] = useState<User | null>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const unsubscribe = initAuth(
-      (user, token) => {
-        setAuthUser(user);
-        setAccessToken(token);
-        // Check if we need to reopen the dashboard after redirect
-        if (sessionStorage.getItem('asm_reopen_admin') === 'true') {
-          setAdminDashboardOpen(true);
-          sessionStorage.removeItem('asm_reopen_admin');
-        }
-      },
-      () => {
-        setAuthUser(null);
-        setAccessToken(null);
-      }
-    );
-    return () => unsubscribe();
-  }, []);
-
   // Sync discount to storage
   useEffect(() => {
     localStorage.setItem('global_discount_enabled', String(discountEnabled));
@@ -439,10 +414,6 @@ export default function App() {
         onToggleZoho={setZohoEnabled}
         discountEnabled={discountEnabled}
         onToggleDiscount={setDiscountEnabled}
-        authUser={authUser}
-        accessToken={accessToken}
-        setAuthUser={setAuthUser}
-        setAccessToken={setAccessToken}
       />
 
       {/* Floating Action Menu for WhatsApp/Chat */}

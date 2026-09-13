@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Shield, Activity, Cpu, Database, Network, Lock, Check, Mail, Phone, Calendar, User, MessageSquare, ExternalLink, Key, LogIn, RefreshCcw, LayoutGrid } from 'lucide-react';
 import { Language, Theme, Lead } from '../types';
-import { User as FirebaseUser } from 'firebase/auth';
-import { googleSignIn, logout } from '../lib/firebase';
 
 interface AdminDashboardModalProps {
   isOpen: boolean;
@@ -13,10 +11,6 @@ interface AdminDashboardModalProps {
   onToggleZoho: (enabled: boolean) => void;
   discountEnabled: boolean;
   onToggleDiscount: (enabled: boolean) => void;
-  authUser: FirebaseUser | null;
-  accessToken: string | null;
-  setAuthUser: (user: FirebaseUser | null) => void;
-  setAccessToken: (token: string | null) => void;
 }
 
 export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
@@ -27,18 +21,17 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   zohoEnabled,
   onToggleZoho,
   discountEnabled,
-  onToggleDiscount,
-  authUser,
-  accessToken,
-  setAuthUser,
-  setAccessToken
+  onToggleDiscount
 }) => {
   const isDark = theme === 'dark';
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [pilotCount, setPilotCount] = useState<number>(14); 
-  const [isInternalLoggedIn, setIsInternalLoggedIn] = useState(false);
+  const [isInternalLoggedIn, setIsInternalLoggedIn] = useState(() => {
+    return sessionStorage.getItem('asm_admin_session') === 'asm_backend_auth_token_2026';
+  });
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [spreadsheetId, setSpreadsheetId] = useState(() => localStorage.getItem('asm_spreadsheet_id') || '');
   const [fetchingLeads, setFetchingLeads] = useState(false);
@@ -48,72 +41,51 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     localStorage.setItem('asm_spreadsheet_id', spreadsheetId);
   }, [spreadsheetId]);
 
-  // Fetch leads from Google Sheets or LocalStorage
-  const fetchLeads = async () => {
-    if (accessToken && spreadsheetId) {
-      setFetchingLeads(true);
-      try {
-        const range = 'A2:I100'; // Standard range for lead data
-        const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}`, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        const data = await res.json();
-        
-        if (data.values) {
-          const sheetLeads: Lead[] = data.values.map((row: any[], index: number) => ({
-            id: `sheet-${index}`,
-            timestamp: row[0] || new Date().toISOString(),
-            name: row[1] || 'Unknown',
-            email: row[2] || '',
-            phone: row[3] || '',
-            packageName: row[4] || 'General',
-            estimatedPrice: row[5] || '',
-            message: row[6] || '',
-            status: 'new'
-          }));
-          setLeads(sheetLeads);
-        }
-      } catch (error) {
-        console.error('Error fetching leads from Sheets:', error);
-      } finally {
-        setFetchingLeads(false);
-      }
-    } else {
-      const savedLeads = localStorage.getItem('website_leads');
-      if (savedLeads) {
-        setLeads(JSON.parse(savedLeads));
-      }
+  // Fetch leads from LocalStorage
+  const fetchLeads = () => {
+    const savedLeads = localStorage.getItem('website_leads');
+    if (savedLeads) {
+      setLeads(JSON.parse(savedLeads));
     }
   };
 
   useEffect(() => {
-    if (isInternalLoggedIn || authUser) {
+    if (isInternalLoggedIn) {
       fetchLeads();
     }
-  }, [isInternalLoggedIn, authUser, accessToken]);
+  }, [isInternalLoggedIn]);
 
   if (!isOpen) return null;
 
-  const handleInternalLogin = (e: React.FormEvent) => {
+  const handleInternalLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'alan_admin_2026') {
-      setIsInternalLoggedIn(true);
-      setLoginError(false);
-    } else {
+    setIsLoggingIn(true);
+    setLoginError(false);
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setIsInternalLoggedIn(true);
+        sessionStorage.setItem('asm_admin_session', data.token);
+      } else {
+        setLoginError(true);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
       setLoginError(true);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Store flag to reopen modal after redirect
-    sessionStorage.setItem('asm_reopen_admin', 'true');
-    googleSignIn();
-  };
-
-  const handleLogout = async () => {
-    await logout();
-    setAuthUser(null);
-    setAccessToken(null);
+  const handleLogout = () => {
+    sessionStorage.removeItem('asm_admin_session');
     setIsInternalLoggedIn(false);
   };
 
@@ -124,7 +96,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     }, 1500);
   };
 
-  if (!isInternalLoggedIn && !authUser) {
+  if (!isInternalLoggedIn) {
     return (
       <div className="fixed inset-0 z-100 overflow-y-auto flex items-center justify-center p-4">
         <div onClick={onClose} className="fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity" />
@@ -154,35 +126,14 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 />
               </div>
               {loginError && <p className="text-[10px] text-red-500 font-bold uppercase">Invalid Access Key</p>}
-              <button type="submit" className="w-full bg-slate-900 dark:bg-white dark:text-slate-950 text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-900/10">
-                Unlock with Key
+              <button 
+                type="submit" 
+                disabled={isLoggingIn}
+                className="w-full bg-slate-900 dark:bg-white dark:text-slate-950 text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-lg shadow-blue-900/10 flex items-center justify-center gap-2 disabled:opacity-55"
+              >
+                {isLoggingIn ? 'Verifying Key...' : 'Unlock with Key'}
               </button>
             </form>
-
-            <div className="w-full flex items-center gap-4 py-2">
-              <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-              <span className="text-[10px] text-slate-500 font-bold">OR</span>
-              <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-            </div>
-
-            <button 
-              onClick={handleGoogleLogin}
-              className={`w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-xl border font-bold text-sm transition-all hover:scale-[1.02] ${
-                isDark ? 'bg-slate-900 border-slate-800 text-white hover:bg-slate-800' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 shadow-sm'
-              }`}
-            >
-              <svg className="w-5 h-5" viewBox="0 0 48 48">
-                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-              </svg>
-              Sign in with Google
-            </button>
-
-            <p className="text-[10px] text-slate-500 leading-normal max-w-[280px]">
-              ⚠️ <strong>Mobile / Preview Tip:</strong> If the button doesn't respond, open this site in its own browser tab (not inside an iframe or in-app preview) to bypass security restrictions.
-            </p>
 
             <button onClick={onClose} className="text-xs text-slate-500 hover:text-slate-400">Cancel</button>
           </div>
@@ -222,7 +173,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                 AlanSM Engineering Console
               </h3>
               <p className="text-[11px] text-slate-400 mt-0.5">
-                Logged in as: <span className="font-semibold text-slate-300">{authUser?.email || 'alanpkmorais@gmail.com'}</span>
+                Logged in as: <span className="font-semibold text-slate-300">alanpkmorais@gmail.com</span>
               </p>
             </div>
           </div>
