@@ -80,8 +80,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const handleInternalLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedPassword = password.trim();
+    const correctStaticPassword = ((import.meta as any).env.VITE_ADMIN_PASSWORD || 'alan_admin_2026').trim();
     setIsLoggingIn(true);
     setLoginError(false);
+    
     try {
       const response = await fetch('/api/admin/login', {
         method: 'POST',
@@ -92,41 +94,45 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
       });
       
       if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          setIsInternalLoggedIn(true);
-          try {
-            sessionStorage.setItem('asm_admin_session', data.token);
-          } catch (e) {
-            console.warn('Failed to write to sessionStorage:', e);
+        try {
+          const data = await response.json();
+          if (data && typeof data === 'object' && 'success' in data) {
+            if (data.success) {
+              setIsInternalLoggedIn(true);
+              try {
+                sessionStorage.setItem('asm_admin_session', data.token || 'asm_backend_auth_token_2026');
+              } catch (e) {
+                console.warn('Failed to write to sessionStorage:', e);
+              }
+              return;
+            } else {
+              setLoginError(true);
+              return;
+            }
           }
-          return;
-        } else {
-          setLoginError(true);
-          return;
+        } catch (jsonErr) {
+          console.warn('Failed to parse backend response, falling back to static check:', jsonErr);
         }
       }
 
-      // If response status is 404 (static hosting where API is not available)
-      if (response.status === 404) {
-        if (trimmedPassword === 'alan_admin_2026') {
-          setIsInternalLoggedIn(true);
-          try {
-            sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
-          } catch (e) {
-            console.warn('Failed to write to sessionStorage:', e);
-          }
-        } else {
-          setLoginError(true);
+      // If we got here, either:
+      // 1. The response is not OK (e.g., 405 Method Not Allowed on static pages, 404, or 500)
+      // 2. The response is OK but not valid JSON (e.g., HTML response from static server)
+      // Let's use the static fallback password check.
+      if (trimmedPassword === correctStaticPassword) {
+        setIsInternalLoggedIn(true);
+        try {
+          sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
+        } catch (e) {
+          console.warn('Failed to write to sessionStorage:', e);
         }
-        return;
+      } else {
+        setLoginError(true);
       }
-      
-      setLoginError(true);
     } catch (error) {
       console.warn('API authentication unavailable, using static fallback:', error);
-      // Fallback for purely static hosting (e.g. GitHub Pages) where POST /api/admin/login throws/fails
-      if (trimmedPassword === 'alan_admin_2026') {
+      // Fallback for network-level exceptions/cors issues
+      if (trimmedPassword === correctStaticPassword) {
         setIsInternalLoggedIn(true);
         try {
           sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
