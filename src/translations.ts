@@ -41,6 +41,18 @@ export const translations = {
       stat2Desc: 'Bezpieczne procesy CRM',
       stat3Title: 'Europa & LATAM',
       stat3Desc: 'Kraków (PL) & São Sebastião (BR)',
+      features: {
+        commission: '0% Prowizji Aktywne',
+        deliveryTitle: 'Własny DeliveryHub',
+        deliverySub: '+100% Retencji Klientów',
+        deliveryDesc: 'Bez pośredników i prowizji',
+        bookingTitle: 'Rezerwacje Online',
+        bookingSub: '24/7 Zapisy Klientów',
+        bookingDesc: 'Automatyczne SMS & WhatsApp',
+        crmTitle: 'CRM & Integracje',
+        crmSub: 'Auto-Synchronizacja',
+        crmDesc: 'Płatności i bazy danych'
+      }
     },
     roi: {
       badge: 'Interaktywny Kalkulator ROI',
@@ -240,6 +252,18 @@ export const translations = {
       stat2Desc: 'Secure CRM workflows',
       stat3Title: 'Europe & LATAM',
       stat3Desc: 'Kraków (PL) & São Sebastião (BR)',
+      features: {
+        commission: '0% Commission Active',
+        deliveryTitle: 'Private DeliveryHub',
+        deliverySub: '+100% Customer Retention',
+        deliveryDesc: 'No intermediaries or fees',
+        bookingTitle: 'Online Bookings',
+        bookingSub: '24/7 Client Scheduling',
+        bookingDesc: 'Automated SMS & WhatsApp',
+        crmTitle: 'CRM & Integrations',
+        crmSub: 'Auto-Synchronization',
+        crmDesc: 'Payments and Databases'
+      }
     },
     roi: {
       badge: 'Interactive ROI Calculator',
@@ -439,6 +463,18 @@ export const translations = {
       stat2Desc: 'Fluxos de CRM seguros',
       stat3Title: 'Europa & LATAM',
       stat3Desc: 'Cracóvia (PL) & São Sebastião (BR)',
+      features: {
+        commission: '0% Comissão Ativa',
+        deliveryTitle: 'DeliveryHub Próprio',
+        deliverySub: '+100% Retenção de Clientes',
+        deliveryDesc: 'Sem intermediários ou taxas',
+        bookingTitle: 'Agendamentos Online',
+        bookingSub: 'Reservas 24/7',
+        bookingDesc: 'WhatsApp & SMS Automáticos',
+        crmTitle: 'CRM & Integrações',
+        crmSub: 'Auto-Sincronização',
+        crmDesc: 'Pagamentos e Banco de Dados'
+      }
     },
     roi: {
       badge: 'Calculadora Interativa de ROI',
@@ -614,6 +650,18 @@ export const translations = {
       stat2Desc: 'Procesos de CRM seguros',
       stat3Title: 'Europa & LATAM',
       stat3Desc: 'Cracovia (PL) & São Sebastião (BR)',
+      features: {
+        commission: '0% Comisión Activa',
+        deliveryTitle: 'DeliveryHub Propio',
+        deliverySub: '+100% Retención de Clientes',
+        deliveryDesc: 'Sin intermediarios ni tasas',
+        bookingTitle: 'Reservas Online',
+        bookingSub: 'Citas 24/7',
+        bookingDesc: 'WhatsApp & SMS Automáticos',
+        crmTitle: 'CRM & Integraciones',
+        crmSub: 'Auto-Sincronización',
+        crmDesc: 'Pagos y Bases de Datos'
+      }
     },
     roi: {
       badge: 'Calculadora Interactiva de ROI',

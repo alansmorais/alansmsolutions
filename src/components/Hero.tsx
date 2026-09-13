@@ -78,7 +78,7 @@ export const Hero: React.FC<HeroProps> = ({ currentLang, theme, onOpenContact })
               <span className="ml-2 font-mono text-[10px] hidden sm:inline">alansmsolutions.com/dashboard</span>
             </div>
             <div className="flex items-center gap-2 text-[10px] font-semibold text-emerald-500">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 0% Prowizji Aktywne
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> {t.features.commission}
             </div>
           </div>
 
@@ -100,30 +100,30 @@ export const Hero: React.FC<HeroProps> = ({ currentLang, theme, onOpenContact })
                 isDark ? 'bg-slate-900/90 border-slate-700/80 text-white' : 'bg-white/95 border-slate-200 text-slate-900 shadow-md'
               }`}>
                 <div className="flex items-center gap-1.5 text-blue-500 text-[10px] font-bold uppercase tracking-wider mb-0.5">
-                  <TrendingUp className="w-3 h-3" /> Własny DeliveryHub
+                  <TrendingUp className="w-3 h-3" /> {t.features.deliveryTitle}
                 </div>
-                <div className="text-xs sm:text-sm font-extrabold">+100% Retencji Klientów</div>
-                <div className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Bez pośredników i prowizji</div>
+                <div className="text-xs sm:text-sm font-extrabold">{t.features.deliverySub}</div>
+                <div className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{t.features.deliveryDesc}</div>
               </div>
 
               <div className={`p-2.5 rounded-xl border backdrop-blur-md flex-1 text-left ${
                 isDark ? 'bg-slate-900/90 border-slate-700/80 text-white' : 'bg-white/95 border-slate-200 text-slate-900 shadow-md'
               }`}>
                 <div className="flex items-center gap-1.5 text-emerald-500 text-[10px] font-bold uppercase tracking-wider mb-0.5">
-                  <CheckCircle2 className="w-3 h-3" /> Rezerwacje Online
+                  <CheckCircle2 className="w-3 h-3" /> {t.features.bookingTitle}
                 </div>
-                <div className="text-xs sm:text-sm font-extrabold">24/7 Zapisy Klientów</div>
-                <div className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Automatyczne SMS & WhatsApp</div>
+                <div className="text-xs sm:text-sm font-extrabold">{t.features.bookingSub}</div>
+                <div className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{t.features.bookingDesc}</div>
               </div>
 
               <div className={`p-2.5 rounded-xl border backdrop-blur-md flex-1 text-left hidden md:block ${
                 isDark ? 'bg-slate-900/90 border-slate-700/80 text-white' : 'bg-white/95 border-slate-200 text-slate-900 shadow-md'
               }`}>
                 <div className="flex items-center gap-1.5 text-purple-500 text-[10px] font-bold uppercase tracking-wider mb-0.5">
-                  <Cpu className="w-3 h-3" /> CRM & Integracje
+                  <Cpu className="w-3 h-3" /> {t.features.crmTitle}
                 </div>
-                <div className="text-xs sm:text-sm font-extrabold">Auto-Synchronizacja</div>
-                <div className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Płatności i bazy danych</div>
+                <div className="text-xs sm:text-sm font-extrabold">{t.features.crmSub}</div>
+                <div className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{t.features.crmDesc}</div>
               </div>
             </div>
           </div>

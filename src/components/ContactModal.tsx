@@ -78,7 +78,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     };
 
     try {
-      const scriptUrl = (import.meta as any).env.VITE_CONTACT_API_URL || 'https://script.google.com/macros/s/AKfycbyqSx9ThK0tfEuGeSay0jJATaA_ZiUeoj-Ag_gEtvG94mMNX_s0z_A4H2CI4_Oql2ynDg/exec';
+      const scriptUrl = (import.meta as any).env.VITE_CONTACT_API_URL || 'https://script.google.com/macros/s/AKfycbz79vJPlkcX-mR9HlyGSYqCfJkX0soP-7xeev9VfxliPwwWqgMftKTFvYrFuxBILcvWYQ/exec';
       
       // Save locally first for the dashboard
       const newLead = {
