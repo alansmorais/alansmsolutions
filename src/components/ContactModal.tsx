@@ -65,6 +65,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     const payload = {
       action: 'createLead',
       key: 'alan_admin_2026',
+      target_email: 'alanpkmorais@gmail.com', // Directed to user's requested email
       nome: name,
       email: email,
       telefone: phone,

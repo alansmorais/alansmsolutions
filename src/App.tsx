@@ -12,6 +12,9 @@ import { LegalModals } from './components/LegalModals';
 import { Footer } from './components/Footer';
 import { SolutionDetailView } from './components/SolutionDetailView';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
+import { FloatingContact } from './components/FloatingContact';
+import { initAuth } from './lib/firebase';
+import { User } from 'firebase/auth';
 
 // Helper to determine initial language from URL path or param or storage
 const getInitialLanguage = (): Language => {
@@ -113,6 +116,24 @@ export default function App() {
     return saved !== 'false'; // Default to true (as it was before)
   });
   const [adminDashboardOpen, setAdminDashboardOpen] = useState(false);
+  
+  // Auth State for Google Sheets
+  const [authUser, setAuthUser] = useState<User | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = initAuth(
+      (user, token) => {
+        setAuthUser(user);
+        setAccessToken(token);
+      },
+      () => {
+        setAuthUser(null);
+        setAccessToken(null);
+      }
+    );
+    return () => unsubscribe();
+  }, []);
 
   // Sync discount to storage
   useEffect(() => {
@@ -413,6 +434,18 @@ export default function App() {
         onToggleZoho={setZohoEnabled}
         discountEnabled={discountEnabled}
         onToggleDiscount={setDiscountEnabled}
+        authUser={authUser}
+        accessToken={accessToken}
+        setAuthUser={setAuthUser}
+        setAccessToken={setAccessToken}
+      />
+
+      {/* Floating Action Menu for WhatsApp/Chat */}
+      <FloatingContact 
+        theme={theme}
+        currentLang={currentLang}
+        onOpenContact={handleOpenContact}
+        zohoEnabled={zohoEnabled}
       />
     </div>
   );
