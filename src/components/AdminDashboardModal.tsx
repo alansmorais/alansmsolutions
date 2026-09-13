@@ -67,7 +67,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password: password.trim() }),
       });
       const data = await response.json();
       if (response.ok && data.success) {
