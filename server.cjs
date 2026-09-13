@@ -31,8 +31,9 @@ async function startServer() {
   app.use(import_express.default.json());
   app.post("/api/admin/login", (req, res) => {
     const { password } = req.body;
-    const correctPassword = process.env.ADMIN_PASSWORD || "alan_admin_2026";
-    if (password === correctPassword) {
+    const correctPassword = (process.env.ADMIN_PASSWORD || "alan_admin_2026").trim();
+    const submittedPassword = (password || "").trim();
+    if (submittedPassword === correctPassword) {
       res.json({ success: true, token: "asm_backend_auth_token_2026" });
     } else {
       res.status(401).json({ success: false, error: "Invalid access key" });
