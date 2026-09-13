@@ -29,9 +29,13 @@ const getInitialLanguage = (): Language => {
       return langParam;
     }
 
-    const saved = localStorage.getItem('user_lang') as Language;
-    if (saved && ['pl', 'en', 'br', 'es'].includes(saved)) {
-      return saved;
+    try {
+      const saved = localStorage.getItem('user_lang') as Language;
+      if (saved && ['pl', 'en', 'br', 'es'].includes(saved)) {
+        return saved;
+      }
+    } catch (e) {
+      console.warn('localStorage is blocked or unavailable:', e);
     }
   }
   return 'pl';
@@ -97,8 +101,13 @@ export default function App() {
   const [activeSolution, setActiveSolution] = useState<'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null>(getInitialSolution);
 
   const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('user_theme') as Theme;
-    return savedTheme && ['dark', 'light'].includes(savedTheme) ? savedTheme : 'dark';
+    try {
+      const savedTheme = localStorage.getItem('user_theme') as Theme;
+      return savedTheme && ['dark', 'light'].includes(savedTheme) ? savedTheme : 'dark';
+    } catch (e) {
+      console.warn('localStorage is blocked or unavailable:', e);
+      return 'dark';
+    }
   });
 
   const [contactModalOpen, setContactModalOpen] = useState(false);
@@ -106,23 +115,39 @@ export default function App() {
   const [legalModalType, setLegalModalType] = useState<'terms' | 'privacy' | null>(null);
 
   const [zohoEnabled, setZohoEnabled] = useState<boolean>(() => {
-    const saved = localStorage.getItem('zoho_enabled');
-    return saved === 'true'; // Default to false (hidden from client)
+    try {
+      const saved = localStorage.getItem('zoho_enabled');
+      return saved === 'true'; // Default to false (hidden from client)
+    } catch (e) {
+      return false;
+    }
   });
   const [discountEnabled, setDiscountEnabled] = useState<boolean>(() => {
-    const saved = localStorage.getItem('global_discount_enabled');
-    return saved !== 'false'; // Default to true (as it was before)
+    try {
+      const saved = localStorage.getItem('global_discount_enabled');
+      return saved !== 'false'; // Default to true (as it was before)
+    } catch (e) {
+      return true;
+    }
   });
   const [adminDashboardOpen, setAdminDashboardOpen] = useState(false);
   
   // Sync discount to storage
   useEffect(() => {
-    localStorage.setItem('global_discount_enabled', String(discountEnabled));
+    try {
+      localStorage.setItem('global_discount_enabled', String(discountEnabled));
+    } catch (e) {
+      console.warn('localStorage is blocked or unavailable:', e);
+    }
   }, [discountEnabled]);
 
   // Dynamically load/unload Zoho SalesIQ based on admin toggle
   useEffect(() => {
-    localStorage.setItem('zoho_enabled', String(zohoEnabled));
+    try {
+      localStorage.setItem('zoho_enabled', String(zohoEnabled));
+    } catch (e) {
+      console.warn('localStorage is blocked or unavailable:', e);
+    }
     if (zohoEnabled) {
       if (typeof window !== 'undefined') {
         const existing = document.getElementById('zoho-salesiq-script');
@@ -242,7 +267,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('user_theme', theme);
+    try {
+      localStorage.setItem('user_theme', theme);
+    } catch (e) {
+      console.warn('localStorage is blocked or unavailable:', e);
+    }
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
       document.body.style.backgroundColor = '#090d16';
@@ -294,7 +323,11 @@ export default function App() {
 
   const handleLanguageChange = (lang: Language) => {
     setCurrentLang(lang);
-    localStorage.setItem('user_lang', lang);
+    try {
+      localStorage.setItem('user_lang', lang);
+    } catch (e) {
+      console.warn('localStorage is blocked or unavailable:', e);
+    }
     
     // Update browser URL without refreshing so search crawlers and share links have dedicated URLs
     try {

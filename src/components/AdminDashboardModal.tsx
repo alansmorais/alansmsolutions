@@ -27,25 +27,45 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [pilotCount, setPilotCount] = useState<number>(14); 
   const [isInternalLoggedIn, setIsInternalLoggedIn] = useState(() => {
-    return sessionStorage.getItem('asm_admin_session') === 'asm_backend_auth_token_2026';
+    try {
+      return sessionStorage.getItem('asm_admin_session') === 'asm_backend_auth_token_2026';
+    } catch (e) {
+      console.warn('sessionStorage is unavailable:', e);
+      return false;
+    }
   });
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [spreadsheetId, setSpreadsheetId] = useState(() => localStorage.getItem('asm_spreadsheet_id') || '');
+  const [spreadsheetId, setSpreadsheetId] = useState(() => {
+    try {
+      return localStorage.getItem('asm_spreadsheet_id') || '';
+    } catch (e) {
+      console.warn('localStorage is unavailable:', e);
+      return '';
+    }
+  });
   const [fetchingLeads, setFetchingLeads] = useState(false);
 
   // Sync spreadsheetId to storage
   useEffect(() => {
-    localStorage.setItem('asm_spreadsheet_id', spreadsheetId);
+    try {
+      localStorage.setItem('asm_spreadsheet_id', spreadsheetId);
+    } catch (e) {
+      console.warn('Failed to save to localStorage:', e);
+    }
   }, [spreadsheetId]);
 
   // Fetch leads from LocalStorage
   const fetchLeads = () => {
-    const savedLeads = localStorage.getItem('website_leads');
-    if (savedLeads) {
-      setLeads(JSON.parse(savedLeads));
+    try {
+      const savedLeads = localStorage.getItem('website_leads');
+      if (savedLeads) {
+        setLeads(JSON.parse(savedLeads));
+      }
+    } catch (e) {
+      console.warn('Failed to read from localStorage:', e);
     }
   };
 
@@ -75,7 +95,11 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         const data = await response.json();
         if (data.success) {
           setIsInternalLoggedIn(true);
-          sessionStorage.setItem('asm_admin_session', data.token);
+          try {
+            sessionStorage.setItem('asm_admin_session', data.token);
+          } catch (e) {
+            console.warn('Failed to write to sessionStorage:', e);
+          }
           return;
         } else {
           setLoginError(true);
@@ -87,7 +111,11 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
       if (response.status === 404) {
         if (trimmedPassword === 'alan_admin_2026') {
           setIsInternalLoggedIn(true);
-          sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
+          try {
+            sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
+          } catch (e) {
+            console.warn('Failed to write to sessionStorage:', e);
+          }
         } else {
           setLoginError(true);
         }
@@ -100,7 +128,11 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
       // Fallback for purely static hosting (e.g. GitHub Pages) where POST /api/admin/login throws/fails
       if (trimmedPassword === 'alan_admin_2026') {
         setIsInternalLoggedIn(true);
-        sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
+        try {
+          sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
+        } catch (e) {
+          console.warn('Failed to write to sessionStorage:', e);
+        }
       } else {
         setLoginError(true);
       }
@@ -110,7 +142,11 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('asm_admin_session');
+    try {
+      sessionStorage.removeItem('asm_admin_session');
+    } catch (e) {
+      console.warn('Failed to remove item from sessionStorage:', e);
+    }
     setIsInternalLoggedIn(false);
   };
 
