@@ -59,6 +59,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
 
   const handleInternalLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmedPassword = password.trim();
     setIsLoggingIn(true);
     setLoginError(false);
     try {
@@ -67,18 +68,42 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ password: password.trim() }),
+        body: JSON.stringify({ password: trimmedPassword }),
       });
-      const data = await response.json();
-      if (response.ok && data.success) {
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setIsInternalLoggedIn(true);
+          sessionStorage.setItem('asm_admin_session', data.token);
+          return;
+        } else {
+          setLoginError(true);
+          return;
+        }
+      }
+
+      // If response status is 404 (static hosting where API is not available)
+      if (response.status === 404) {
+        if (trimmedPassword === 'alan_admin_2026') {
+          setIsInternalLoggedIn(true);
+          sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
+        } else {
+          setLoginError(true);
+        }
+        return;
+      }
+      
+      setLoginError(true);
+    } catch (error) {
+      console.warn('API authentication unavailable, using static fallback:', error);
+      // Fallback for purely static hosting (e.g. GitHub Pages) where POST /api/admin/login throws/fails
+      if (trimmedPassword === 'alan_admin_2026') {
         setIsInternalLoggedIn(true);
-        sessionStorage.setItem('asm_admin_session', data.token);
+        sessionStorage.setItem('asm_admin_session', 'asm_backend_auth_token_2026');
       } else {
         setLoginError(true);
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      setLoginError(true);
     } finally {
       setIsLoggingIn(false);
     }
