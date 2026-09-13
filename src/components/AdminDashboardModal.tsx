@@ -104,14 +104,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      // Store flag to reopen modal after redirect
-      sessionStorage.setItem('asm_reopen_admin', 'true');
-      await googleSignIn();
-    } catch (error) {
-      console.error('Google Sign-in failed:', error);
-    }
+  const handleGoogleLogin = () => {
+    // Store flag to reopen modal after redirect
+    sessionStorage.setItem('asm_reopen_admin', 'true');
+    googleSignIn();
   };
 
   const handleLogout = async () => {
@@ -183,6 +179,10 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
               </svg>
               Sign in with Google
             </button>
+
+            <p className="text-[10px] text-slate-500 leading-normal max-w-[280px]">
+              ⚠️ <strong>Mobile / Preview Tip:</strong> If the button doesn't respond, open this site in its own browser tab (not inside an iframe or in-app preview) to bypass security restrictions.
+            </p>
 
             <button onClick={onClose} className="text-xs text-slate-500 hover:text-slate-400">Cancel</button>
           </div>

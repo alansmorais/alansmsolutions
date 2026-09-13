@@ -49,14 +49,11 @@ export const initAuth = (
   });
 };
 
-// Must be called from a button click or user interaction
-export const googleSignIn = async () => {
-  try {
-    await signInWithRedirect(auth, provider);
-  } catch (error: any) {
-    console.error('Sign in error:', error);
-    throw error;
-  }
+// Must be called synchronously from a button click or user interaction
+export const googleSignIn = () => {
+  signInWithRedirect(auth, provider).catch((error) => {
+    console.error('Sign in redirect trigger failed:', error);
+  });
 };
 
 export const getAccessToken = async (): Promise<string | null> => {
