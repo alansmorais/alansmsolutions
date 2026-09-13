@@ -106,9 +106,10 @@ export const Footer: React.FC<FooterProps> = ({
           <h4 className={`font-bold text-[11px] uppercase tracking-wider ${isDark ? 'text-white' : 'text-slate-900'}`}>
             {t.contactTitle}
           </h4>
-          <p className="flex items-center gap-1.5 text-[11px]">
-            <MapPin className="w-3.5 h-3.5 text-blue-500 shrink-0" /> {navT.location}
-          </p>
+          <div className="flex items-start gap-1.5 text-[11px] leading-relaxed">
+            <MapPin className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" /> 
+            <span>{navT.location}</span>
+          </div>
           <p className="flex items-center gap-1.5 text-[11px]">
             <Mail className="w-3.5 h-3.5 text-blue-500 shrink-0" /> {navT.email}
           </p>

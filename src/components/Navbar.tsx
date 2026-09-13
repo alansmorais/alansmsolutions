@@ -92,13 +92,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           : 'bg-slate-50 text-slate-600 border-slate-200'
       }`}>
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1">
+            <span className="flex items-center gap-1 whitespace-nowrap">
               <Mail className="w-3 h-3 text-blue-500" /> {t.email}
             </span>
-            <span className={isDark ? 'text-slate-700' : 'text-slate-300'}>•</span>
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-blue-500" /> {t.location}
+            <span className={`hidden xs:inline ${isDark ? 'text-slate-700' : 'text-slate-300'}`}>•</span>
+            <span className="flex items-center gap-1 text-center sm:text-left">
+              <MapPin className="w-3 h-3 text-blue-500 shrink-0" /> {t.location}
             </span>
           </div>
 
