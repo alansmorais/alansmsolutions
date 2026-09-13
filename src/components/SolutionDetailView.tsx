@@ -9,7 +9,6 @@ interface SolutionDetailViewProps {
   theme: Theme;
   onBack: () => void;
   onOpenContact: (pkg?: string, price?: string) => void;
-  onSelectProject: (projectId: 'joanna-filek' | 'daniela-torp' | 'jessica-franco') => void;
   discountEnabled: boolean;
 }
 
@@ -2342,7 +2341,6 @@ export const SolutionDetailView: React.FC<SolutionDetailViewProps> = ({
   theme,
   onBack,
   onOpenContact,
-  onSelectProject,
   discountEnabled
 }) => {
   const isDark = theme === 'dark';
@@ -2364,9 +2362,9 @@ export const SolutionDetailView: React.FC<SolutionDetailViewProps> = ({
   };
 
   const projectReferences = [
-    { id: 'joanna-filek' as const, name: 'Joanna Filek', role: 'Psychoterapeuta', img: 'https://joannafilek.com/images/joanna.png', desc: { pl: 'Kompleksowy landing page i automatyczny, bezpieczny kalendarz zapisów.', en: 'Bespoke sales landing page and custom secure appointments booking.', br: 'Landing page elegante e motor de agendamentos para consultório.', es: 'Portal institucional y agenda confidencial de sesiones.' } },
-    { id: 'daniela-torp' as const, name: 'Daniela Torp', role: 'Intimacy Coach', img: 'https://www.danielatorp.cz/wp-content/uploads/2020/05/untitled-design-7.jpg', desc: { pl: 'Luksusowa, szyfrowana platforma rezerwacji z wieloma walutami.', en: 'Luxury encrypted global consulting booking checkout and timezone manager.', br: 'Plataforma luxuosa com agendamentos anônimos e multimoedas.', es: 'Portal internacional VIP de reservas discretas con Stripe.' } },
-    { id: 'jessica-franco' as const, name: 'Jessica Franco', role: 'Nail Designer', img: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600&auto=format&fit=crop', desc: { pl: 'Mobilny portal rezerwacyjny połączony z zaliczkami i SMS.', en: 'Mobile-first salon booking, micro-deposits system and SMS.', br: 'Portal mobile integrado a pagamento de sinal e WhatsApp.', es: 'Portal táctil, catálogo interactivo y cobro de señas.' } }
+    { id: 'joanna-filek' as const, name: 'Joanna Filek', role: 'Psychoterapeuta', img: 'https://joannafilek.com/images/joanna.png', url: 'https://joannafilek.com/' },
+    { id: 'daniela-torp' as const, name: 'Daniela Torp', role: 'Intimacy Coach', img: 'https://www.danielatorp.cz/wp-content/uploads/2020/05/untitled-design-7.jpg', url: 'https://she.alansmsolutions.com/' },
+    { id: 'jessica-franco' as const, name: 'Jessica Franco', role: 'Nail Designer', img: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600&auto=format&fit=crop', url: 'https://jessicafranco.alansmsolutions.com/' }
   ];
 
   return (
@@ -2667,9 +2665,11 @@ export const SolutionDetailView: React.FC<SolutionDetailViewProps> = ({
 
         <div className="grid sm:grid-cols-3 gap-4">
           {projectReferences.map((ref) => (
-            <div 
+            <a 
               key={ref.id}
-              onClick={() => onSelectProject(ref.id)}
+              href={ref.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`border rounded-xl overflow-hidden cursor-pointer group transition-all hover:-translate-y-0.5 ${
                 isDark 
                   ? 'bg-slate-950/30 border-slate-900 hover:border-slate-800' 
@@ -2690,17 +2690,15 @@ export const SolutionDetailView: React.FC<SolutionDetailViewProps> = ({
                 <h4 className={`text-xs font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   {ref.name} <span className={`text-[10px] font-normal ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>— {ref.role}</span>
                 </h4>
-                <p className={`text-[10px] leading-relaxed mt-1 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                  {ref.desc[currentLang] || ref.desc.pl}
-                </p>
                 <span className={`text-[10px] font-bold inline-flex items-center gap-1 mt-2 transition-colors ${
                   isDark ? 'text-blue-400 group-hover:text-blue-300' : 'text-blue-600 group-hover:text-blue-700'
                 }`}>
-                  {currentLang === 'pl' ? 'Zobacz studium' : 'View case study'}
+                  <Globe className="w-3 h-3" />
+                  {currentLang === 'pl' ? 'Odwiedź projekt' : currentLang === 'br' ? 'Visitar projeto' : currentLang === 'es' ? 'Visitar proyecto' : 'Visit project'}
                   <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                 </span>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>

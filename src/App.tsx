@@ -10,7 +10,6 @@ import { ClientSuccess } from './components/ClientSuccess';
 import { ContactModal } from './components/ContactModal';
 import { LegalModals } from './components/LegalModals';
 import { Footer } from './components/Footer';
-import { ProjectCaseStudy } from './components/ProjectCaseStudy';
 import { SolutionDetailView } from './components/SolutionDetailView';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 
@@ -35,18 +34,6 @@ const getInitialLanguage = (): Language => {
     }
   }
   return 'pl';
-};
-
-// Helper to determine initial project from URL
-const getInitialProject = (): 'joanna-filek' | 'daniela-torp' | 'jessica-franco' | null => {
-  if (typeof window !== 'undefined') {
-    const params = new URLSearchParams(window.location.search);
-    const projectParam = params.get('project');
-    if (projectParam === 'joanna-filek' || projectParam === 'daniela-torp' || projectParam === 'jessica-franco') {
-      return projectParam;
-    }
-  }
-  return null;
 };
 
 // Helper to determine initial solution from URL
@@ -106,7 +93,6 @@ const SEO_CONFIG: Record<Language, {
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState<Language>(getInitialLanguage);
-  const [activeProject, setActiveProject] = useState<'joanna-filek' | 'daniela-torp' | 'jessica-franco' | null>(getInitialProject);
   const [activeSolution, setActiveSolution] = useState<'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null>(getInitialSolution);
 
   const [theme, setTheme] = useState<Theme>(() => {
@@ -178,36 +164,7 @@ export default function App() {
     let desc = '';
     const seo = SEO_CONFIG[currentLang] || SEO_CONFIG.pl;
 
-    if (activeProject) {
-      const projectNames: Record<string, Record<Language, { title: string; desc: string }>> = {
-        'joanna-filek': {
-          pl: { title: 'Joanna Filek — Studium Przypadku | AlanSM Solutions', desc: 'Landing page i automatyczny prywatny kalendarz rezerwacji wizyt dla Joanny Filek.' },
-          en: { title: 'Joanna Filek — Case Study | AlanSM Solutions', desc: 'Custom business landing page and secure private booking system for Joanna Filek.' },
-          br: { title: 'Joanna Filek — Estudo de Caso | AlanSM Solutions', desc: 'Landing page exclusiva e motor de agendamentos para consultório de Joanna Filek.' },
-          es: { title: 'Joanna Filek — Caso de Estudio | AlanSM Solutions', desc: 'Sitio de consultoría profesional y sistema de reservas para Joanna Filek.' }
-        },
-        'daniela-torp': {
-          pl: { title: 'Daniela Torp — Studium Przypadku | AlanSM Solutions', desc: 'Szyfrowana i w pełni prywatna platforma rezerwacji konsultacji online dla Danieli Torp.' },
-          en: { title: 'Daniela Torp — Case Study | AlanSM Solutions', desc: 'Encrypted global booking checkout and anonymous counseling engine for Daniela Torp.' },
-          br: { title: 'Daniela Torp — Estudo de Caso | AlanSM Solutions', desc: 'Agendamentos privativos de alta segurança e checkout multimoedas para Daniela Torp.' },
-          es: { title: 'Daniela Torp — Caso de Estudio | AlanSM Solutions', desc: 'Pasarela internacional de reservas y consultas VIP anónimas para Daniela Torp.' }
-        },
-        'jessica-franco': {
-          pl: { title: 'Jessica Franco — Studium Przypadku | AlanSM Solutions', desc: 'Mobilny portal rezerwacji i portfolio beauty dla salonu Jessiki Franco.' },
-          en: { title: 'Jessica Franco — Case Study | AlanSM Solutions', desc: 'Mobile-first beauty scheduling, online deposits, and portfolio for Jessica Franco.' },
-          br: { title: 'Jessica Franco — Estudo de Caso | AlanSM Solutions', desc: 'Portal mobile e pagamentos de sinal para estúdio de Jessica Franco.' },
-          es: { title: 'Jessica Franco — Caso de Estudio | AlanSM Solutions', desc: 'Portal móvil, galería de fotos i señas integradas para Jessica Franco.' }
-        }
-      };
-      const projSeo = projectNames[activeProject]?.[currentLang] || projectNames[activeProject]?.pl;
-      if (projSeo) {
-        title = projSeo.title;
-        desc = projSeo.desc;
-      } else {
-        title = seo.title;
-        desc = seo.desc;
-      }
-    } else if (activeSolution) {
+    if (activeSolution) {
       const solutionNames: Record<string, Record<Language, { title: string; desc: string }>> = {
         'website': {
           pl: { title: 'Strony i Portale Biznesowe | ASM Solutions', desc: 'Szybkie strony internetowe, landing page oraz profesjonalne panele klienta o bezkompromisowej szybkości i integracji.' },
@@ -258,10 +215,10 @@ export default function App() {
 
     // Update OpenGraph tags
     let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.setAttribute('content', (activeProject || activeSolution) ? title : seo.ogTitle);
+    if (ogTitle) ogTitle.setAttribute('content', activeSolution ? title : seo.ogTitle);
 
     let ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) ogDesc.setAttribute('content', (activeProject || activeSolution) ? desc : seo.ogDesc);
+    if (ogDesc) ogDesc.setAttribute('content', activeSolution ? desc : seo.ogDesc);
 
     let ogLocale = document.querySelector('meta[property="og:locale"]');
     if (ogLocale) ogLocale.setAttribute('content', seo.locale);
@@ -271,13 +228,12 @@ export default function App() {
       const url = new URL(window.location.href);
       canonical.setAttribute('href', url.origin + url.pathname + url.search);
     }
-  }, [currentLang, activeProject, activeSolution]);
+  }, [currentLang, activeSolution]);
 
   // Synchronize URL query/path and back/forward navigation
   useEffect(() => {
     const handlePopState = () => {
       setCurrentLang(getInitialLanguage());
-      setActiveProject(getInitialProject());
       setActiveSolution(getInitialSolution());
     };
     window.addEventListener('popstate', handlePopState);
@@ -319,30 +275,8 @@ export default function App() {
     setContactModalOpen(true);
   };
 
-  const handleSelectProject = (projectId: 'joanna-filek' | 'daniela-torp' | 'jessica-franco' | null) => {
-    setActiveProject(projectId);
-    if (projectId) {
-      setActiveSolution(null);
-    }
-    try {
-      const url = new URL(window.location.href);
-      if (projectId) {
-        url.searchParams.set('project', projectId);
-        url.searchParams.delete('solution');
-      } else {
-        url.searchParams.delete('project');
-      }
-      window.history.pushState({ lang: currentLang, project: projectId, solution: null }, '', url.toString());
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   const handleSelectSolution = (solutionId: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null) => {
     setActiveSolution(solutionId);
-    if (solutionId) {
-      setActiveProject(null);
-    }
     try {
       const url = new URL(window.location.href);
       if (solutionId) {
@@ -369,7 +303,7 @@ export default function App() {
       } else {
         url.searchParams.set('lang', lang);
       }
-      window.history.pushState({ lang, project: activeProject, solution: activeSolution }, '', url.toString());
+      window.history.pushState({ lang, project: null, solution: activeSolution }, '', url.toString());
     } catch (e) {
       console.error(e);
     }
@@ -395,22 +329,13 @@ export default function App() {
 
       {/* Main Content */}
       <main className="space-y-6 md:space-y-8 pt-20 sm:pt-22 pb-8">
-        {activeProject ? (
-          <ProjectCaseStudy 
-            projectId={activeProject}
-            currentLang={currentLang}
-            theme={theme}
-            onBack={() => handleSelectProject(null)}
-            onOpenContact={handleOpenContact}
-          />
-        ) : activeSolution ? (
+        {activeSolution ? (
           <SolutionDetailView 
             solutionId={activeSolution}
             currentLang={currentLang}
             theme={theme}
             onBack={() => handleSelectSolution(null)}
             onOpenContact={handleOpenContact}
-            onSelectProject={handleSelectProject}
             discountEnabled={discountEnabled}
           />
         ) : (
@@ -448,7 +373,6 @@ export default function App() {
             <ClientSuccess 
               currentLang={currentLang}
               theme={theme}
-              onSelectProject={handleSelectProject}
             />
           </>
         )}
@@ -466,7 +390,7 @@ export default function App() {
       <ContactModal 
         isOpen={contactModalOpen}
         onClose={() => setContactModalOpen(false)}
-        selectedPackage={selectedPackage}
+        initialPackage={selectedPackage}
         currentLang={currentLang}
         theme={theme}
       />

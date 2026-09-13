@@ -136,7 +136,6 @@ export const translations = {
         {
           name: 'Joanna Filek',
           role: 'Psychoterapeutka',
-          desc: 'Projekt platformy internetowej i UX, budujący zaufanie oraz ułatwiający bezpośredni kontakt z pacjentami.',
           url: 'https://joannafilek.com/',
           logo: 'https://joannafilek.com/images/logo.png',
           isImageLogo: true,
@@ -144,14 +143,12 @@ export const translations = {
         {
           name: 'Daniela Torp',
           role: 'Intimacy Coach',
-          desc: 'Bezpieczny, prywatny system rezerwacji i konsultacji online gwarantujący pełną dyskrecję.',
           url: 'https://she.alansmsolutions.com/',
           isImageLogo: false,
         },
         {
           name: 'Jessica Franco',
           role: 'Nail Designer & Salon',
-          desc: 'Zautomatyzowany portal rezerwacyjny prezentujący portfolio prac i eliminujący ręczne odpisywanie w DM.',
           url: 'https://jessicafranco.alansmsolutions.com/',
           isImageLogo: false,
         }
@@ -324,7 +321,6 @@ export const translations = {
         {
           name: 'Joanna Filek',
           role: 'Psychotherapist',
-          desc: 'Collaborative web development and UX project designed to elevate professional brand presence and client interaction.',
           url: 'https://joannafilek.com/',
           logo: 'https://joannafilek.com/images/logo.png',
           isImageLogo: true,
@@ -332,14 +328,12 @@ export const translations = {
         {
           name: 'Daniela Torp',
           role: 'Intimacy Coach',
-          desc: 'Secure, private booking and consultation platform designed to offer absolute discretion for sensitive sessions.',
           url: 'https://she.alansmsolutions.com/',
           isImageLogo: false,
         },
         {
           name: 'Jessica Franco',
           role: 'Nail Designer',
-          desc: 'Automated booking portal that showcases portfolio work and handles appointments directly, eliminating manual DMs.',
           url: 'https://jessicafranco.alansmsolutions.com/',
           isImageLogo: false,
         }
@@ -488,7 +482,6 @@ export const translations = {
         {
           name: 'Joanna Filek',
           role: 'Psicoterapeuta',
-          desc: 'Desenvolvimento web colaborativo e UX estruturado para elevar a autoridade profissional e o contato com pacientes.',
           url: 'https://joannafilek.com/',
           logo: 'https://joannafilek.com/images/logo.png',
           isImageLogo: true,
@@ -496,14 +489,12 @@ export const translations = {
         {
           name: 'Daniela Torp',
           role: 'Intimacy Coach',
-          desc: 'Plataforma privada de agendamento e consultorias com total discrição e segurança.',
           url: 'https://she.alansmsolutions.com/',
           isImageLogo: false,
         },
         {
           name: 'Jessica Franco',
           role: 'Nail Designer',
-          desc: 'Portal automatizado que exibe portfólio e gerencia horários diretamente, dispensando conversas manuais.',
           url: 'https://jessicafranco.alansmsolutions.com/',
           isImageLogo: false,
         }
@@ -652,7 +643,6 @@ export const translations = {
         {
           name: 'Joanna Filek',
           role: 'Psicoterapeuta',
-          desc: 'Proyecto web colaborativo y de UX diseñado para proyectar solidez profesional y facilitar el contacto con pacientes.',
           url: 'https://joannafilek.com/',
           logo: 'https://joannafilek.com/images/logo.png',
           isImageLogo: true,
@@ -660,14 +650,12 @@ export const translations = {
         {
           name: 'Daniela Torp',
           role: 'Intimacy Coach',
-          desc: 'Plataforma privada de reservas y consultas con absoluta discreción y seguridad.',
           url: 'https://she.alansmsolutions.com/',
           isImageLogo: false,
         },
         {
           name: 'Jessica Franco',
           role: 'Nail Designer',
-          desc: 'Portal automatizado que exhibe el portafolio y gestiona citas directamente sin depender de mensajes manuales.',
           url: 'https://jessicafranco.alansmsolutions.com/',
           isImageLogo: false,
         }
