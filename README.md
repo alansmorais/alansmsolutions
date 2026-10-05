@@ -46,6 +46,14 @@ To run this application, you need to set the following environment variables:
 
 ---
 
+## 🌐 Live URLs
+
+- **Main Portal**: [alansmsolutions.com](https://alansmsolutions.com/)
+- **Referral Program**: [alansmsolutions.com/referral.html](https://alansmsolutions.com/referral.html)
+- **Direct ERP Referral Intake**: [alansmsolutions.com/referal-index.html](https://alansmsolutions.com/referal-index.html)
+
+---
+
 **Developed with Precision by AlanSM Solutions.**
 *Kraków, PL • São Sebastião, BR • Remote*
-<!-- Deployment Trigger: GitHub Actions Build Ready -->
+<!-- Build Version: 2.1.0 — GitHub Actions Pages Deployment -->
