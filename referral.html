@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090D16">
+  <meta name="robots" content="noindex,nofollow">
+  <title>AlanSM Solutions — Referral</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Use Font Awesome for the consistent brand icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #090D16;
+      --surface: #0C1327;
+      --surface-2: #101A31;
+      --blue: #155DFC;
+      --blue-2: #2563EB;
+      --indigo: #6366F1;
+      --text: #FFFFFF;
+      --muted: #8FA8C7;
+      --border: #1C2739;
+      --green: #00B878;
+      --hover: #14203A;
+      --danger: #F87171;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(900px 500px at 8% 4%, rgba(37,99,235,.16), transparent 60%),
+        radial-gradient(700px 420px at 94% 14%, rgba(99,102,241,.10), transparent 60%),
+        linear-gradient(180deg, #090D16 0%, #090D16 55%, #0A1020 100%);
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .35;
+      background-image: linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+    }
+
+    .glass {
+      background: linear-gradient(180deg, rgba(12,19,39,.96), rgba(9,13,22,.96));
+      border: 1px solid var(--border);
+      box-shadow: 0 28px 90px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.025);
+      backdrop-filter: blur(18px);
+    }
+
+    .input {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #0A1121;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 13px 15px;
+      outline: none;
+      font-size: .875rem;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .input:hover { border-color: #2A3A55; }
+    .input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(21,93,252,.14), 0 8px 25px rgba(21,93,252,.07);
+      background: #0C1428;
+    }
+    .input::placeholder { color: #7188A8; opacity: .9; }
+    select.input option { color: #fff; background: #0C1327; }
+
+    .check { accent-color: var(--blue); width: 18px; height: 18px; margin-top: 2px; flex: none; cursor: pointer; }
+
+    .lang-btn {
+      transition: all .2s ease;
+      border: 1px solid var(--border);
+      background: #0C1327;
+      color: var(--text);
+    }
+    .lang-btn:hover { transform: translateY(-2px); border-color: #3159A8; background: #101A31; box-shadow: 0 10px 30px rgba(0,0,0,.22); }
+    .lang-btn.active { border-color: var(--blue); background: rgba(21,93,252,.12); box-shadow: 0 0 0 2px rgba(21,93,252,.12); }
+
+    .service {
+      position: relative;
+      border: 1px solid var(--border);
+      background: #0A1121;
+      border-radius: 14px;
+      padding: 14px 15px;
+      cursor: pointer;
+      transition: all .2s ease;
+      color: #DCE7F6;
+      font-size: .875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      min-height: 52px;
+    }
+    .service:hover { border-color: #3159A8; background: #0D172C; transform: translateY(-1px); }
+    .service.selected {
+      border-color: var(--blue);
+      background: linear-gradient(135deg, rgba(21,93,252,.17), rgba(99,102,241,.10));
+      color: #fff;
+      box-shadow: inset 0 0 0 1px rgba(21,93,252,.10), 0 8px 24px rgba(21,93,252,.08);
+    }
+    .service input { accent-color: var(--blue); }
+
+    .spinner { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fade { animation: fade .4s ease-out; }
+    @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .hidden-important { display: none !important; }
+
+    .brand-button {
+      background: linear-gradient(135deg, var(--blue), var(--indigo));
+      color: #fff;
+      box-shadow: 0 14px 34px rgba(21,93,252,.22), inset 0 1px 0 rgba(255,255,255,.18);
+      transition: all .2s ease;
+    }
+    .brand-button:hover { transform: translateY(-2px); box-shadow: 0 18px 42px rgba(21,93,252,.30), inset 0 1px 0 rgba(255,255,255,.18); }
+    .brand-button:active { transform: translateY(0); }
+
+    .logo-container {
+      width: 48px; height: 48px; border-radius: 14px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: #0C1327; border: 1px solid var(--border);
+      box-shadow: 0 10px 28px rgba(0,0,0,.28), 0 0 24px rgba(21,93,252,.10);
+      padding: 4px;
+    }
+    .logo-img { width: 100%; height: 100%; border-radius: 10px; object-fit: contain; background: #0C1327; }
+
+    .hero-grid { position: relative; }
+    .hero-grid::after {
+      content: '';
+      position: absolute;
+      left: -90px; top: 90px; width: 430px; height: 330px;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(21,93,252,.13), transparent 68%);
+      filter: blur(10px);
+    }
+    .eyebrow { color: #8FB2FF; background: rgba(21,93,252,.10); border: 1px solid rgba(21,93,252,.28); }
+    .hero-title { background: linear-gradient(100deg, #fff 5%, #DCE8FF 48%, #8FB2FF 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .referral-card { background: linear-gradient(135deg, rgba(21,93,252,.10), rgba(99,102,241,.06)); border: 1px solid rgba(58,91,163,.40); }
+    .step-card { background: rgba(12,19,39,.72); border: 1px solid var(--border); }
+    .step-number { color: #8FB2FF; background: rgba(21,93,252,.12); border: 1px solid rgba(21,93,252,.24); }
+    .status-dot { background: var(--green); box-shadow: 0 0 0 5px rgba(0,184,120,.08), 0 0 18px rgba(0,184,120,.35); }
+
+    @media (max-width: 640px) {
+      .hero-title { font-size: 2.55rem; line-height: 1.08; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Language gate -->
+  <section id="languageGate" class="fixed inset-0 z-50 flex items-center justify-center p-5 bg-[var(--bg)]/95 backdrop-blur-xl">
+    <div class="glass w-full max-w-md rounded-[28px] p-8 text-center fade">
+      <div class="mx-auto mb-6 logo-container">
+        <img
+          src="https://raw.githubusercontent.com/alansmorais/alansmsolutions/refs/heads/main/Logo_Transparent.png"
+          onerror="this.style.display='none'"
+          class="logo-img"
+          alt="AlanSM Solutions"
+        >
+      </div>
+      <div class="text-[10px] font-bold uppercase tracking-[.2em] text-[var(--blue-light)] mb-2">AlanSM Solutions</div>
+      <h1 class="text-2xl font-extrabold text-white tracking-tight">Welcome to AlanSM Solutions</h1>
+      <p class="mt-2 text-sm text-[var(--muted)]">Choose your preferred language · Escolha seu idioma · Wybierz język</p>
+
+      <div class="mt-8 grid gap-3">
+        <button class="lang-btn rounded-xl p-4 text-left flex items-center gap-4" data-lang="pt">
+          <span class="text-2xl shadow-sm rounded-full overflow-hidden leading-none">🇧🇷</span>
+          <span><b class="font-bold">Português</b><small class="block text-[var(--muted)] mt-0.5 text-xs">Brasil</small></span>
+        </button>
+        <button class="lang-btn rounded-xl p-4 text-left flex items-center gap-4" data-lang="en">
+          <span class="text-2xl shadow-sm rounded-full overflow-hidden leading-none">🇬🇧</span>
+          <span><b class="font-bold">English</b><small class="block text-[var(--muted)] mt-0.5 text-xs">International</small></span>
+        </button>
+        <button class="lang-btn rounded-xl p-4 text-left flex items-center gap-4" data-lang="pl">
+          <span class="text-2xl shadow-sm rounded-full overflow-hidden leading-none">🇵🇱</span>
+          <span><b class="font-bold">Polski</b><small class="block text-[var(--muted)] mt-0.5 text-xs">Polska</small></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <main id="app" class="hidden relative z-10">
+    <!-- Header aligned with official brand -->
+    <header class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3 md:gap-4 group">
+          <div class="logo-container w-10 h-10 md:w-12 md:h-12">
+            <img src="https://raw.githubusercontent.com/alansmorais/alansmsolutions/refs/heads/main/Logo_Transparent.png" alt="AlanSM Solutions logo" class="logo-img" />
+          </div>
+          <div class="flex flex-col justify-center">
+            <span class="text-base md:text-xl font-extrabold tracking-tight text-white leading-none">AlanSM Solutions</span>
+            <span class="text-[10px] text-[var(--blue-light)] font-bold tracking-widest uppercase mt-1" data-i18n="tagline">Platforma & Systemy</span>
+          </div>
+        </div>
+        <button id="changeLanguage" class="text-xs font-semibold text-[var(--muted)] hover:text-white transition-colors border border-[var(--border)] px-3 py-1.5 rounded-lg bg-[var(--surface)]">Language</button>
+      </div>
+    </header>
+
+    <section class="mx-auto max-w-7xl px-4 sm:px-6 py-8 lg:py-14">
+      <div class="hero-grid grid lg:grid-cols-[0.92fr_1.08fr] gap-10 lg:gap-16 items-start">
+
+        <!-- Left Column: Copy -->
+        <div class="lg:sticky lg:top-10 space-y-6 z-10">
+          <div class="eyebrow inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold tracking-wide">
+            <span class="status-dot w-2 h-2 rounded-full animate-pulse"></span>
+            <span data-i18n="referralBadge">Referral invitation</span>
+          </div>
+
+          <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.15] tracking-tight">
+            <span data-i18n="heroTitle">Stwórzmy razem coś lepszego.</span>
+          </h1>
+
+          <p class="text-base sm:text-lg leading-relaxed text-[var(--muted)] max-w-xl" data-i18n="heroText">
+            You were invited by a partner. Tell us a little about your business and what you need. Our team will contact you directly.
+          </p>
+
+          <div class="grid gap-3 pt-2 text-sm text-[#D7E2F2] font-medium">
+            <div class="flex items-center gap-3"><i class="fas fa-check-circle text-[var(--green)]"></i><span data-i18n="benefit1">No obligation to buy.</span></div>
+            <div class="flex items-center gap-3"><i class="fas fa-check-circle text-[var(--green)]"></i><span data-i18n="benefit2">Human follow-up from AlanSM Solutions.</span></div>
+            <div class="flex items-center gap-3"><i class="fas fa-check-circle text-[var(--green)]"></i><span data-i18n="benefit3">Your information is used to handle this request.</span></div>
+          </div>
+
+          <div id="referralBox" class="referral-card mt-7 rounded-2xl p-5 text-sm hidden shadow-lg">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-[var(--muted)]" data-i18n="referredBy">Referred by</div>
+            <div id="referrerName" class="mt-1 text-lg font-extrabold text-white"></div>
+            <div id="referralCodeView" class="mt-2 text-xs text-[#9DB5D5] font-mono bg-black/20 border border-white/5 inline-block px-2 py-1 rounded"></div>
+          </div>
+        </div>
+
+        <!-- Right Column: Form -->
+        <div class="glass rounded-[28px] p-6 sm:p-8 z-10">
+          <div class="mb-7 border-b border-[var(--border)] pb-6">
+            <h2 class="text-2xl font-extrabold text-white" data-i18n="formTitle">Tell us about your project</h2>
+            <p class="mt-1 text-xs text-[var(--muted)] font-medium" data-i18n="formSubtitle">Fields marked * are required.</p>
+          </div>
+
+          <form id="referralForm" method="POST" target="submitFrame" novalidate class="space-y-6">
+            <input type="hidden" name="action" value="referrallead">
+            <input type="hidden" name="referralCode" id="referralCode">
+            <input type="hidden" name="referrerName" id="referrerNameHidden">
+            <input type="hidden" name="language" id="language">
+            <input type="hidden" name="source" value="Referral Landing Page">
+            <input type="hidden" name="services" id="servicesHidden">
+            <input type="hidden" name="consentAt" id="consentAt">
+            <input type="hidden" name="formToken" id="formToken">
+            <input type="hidden" name="clientStartedAt" id="clientStartedAt">
+
+            <!-- Honeypot -->
+            <div class="hidden-important" aria-hidden="true">
+              <label>Website <input type="text" name="website" id="website" tabindex="-1" autocomplete="off"></label>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div class="sm:col-span-2">
+                <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="fullName" data-i18n="fullName">Full name *</label>
+                <input class="input" id="fullName" name="fullName" autocomplete="name" required data-i18n-placeholder="fullNamePh">
+              </div>
+
+              <div>
+                <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="email" data-i18n="email">Email *</label>
+                <input class="input" id="email" name="email" type="email" autocomplete="email" required data-i18n-placeholder="emailPh">
+              </div>
+
+              <div>
+                <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="phone" data-i18n="phone">Phone / WhatsApp *</label>
+                <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" required data-i18n-placeholder="phonePh">
+              </div>
+
+              <div>
+                <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="company" data-i18n="company">Company / business</label>
+                <input class="input" id="company" name="company" autocomplete="organization" data-i18n-placeholder="companyPh">
+              </div>
+
+              <div>
+                <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="city" data-i18n="city">City</label>
+                <input class="input" id="city" name="city" autocomplete="address-level2" data-i18n-placeholder="cityPh">
+              </div>
+
+              <div>
+                <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="segment" data-i18n="segment">Business type *</label>
+                <select class="input" id="segment" name="segment" required>
+                  <option value="" data-i18n="choose">Choose...</option>
+                  <option value="Restaurant / Food" data-i18n="restaurant">Restaurant / Food</option>
+                  <option value="Transport / Mobility" data-i18n="transport">Transport / Mobility</option>
+                  <option value="Professional Services" data-i18n="professional">Professional Services</option>
+                  <option value="Retail / E-commerce" data-i18n="retail">Retail / E-commerce</option>
+                  <option value="Other" data-i18n="other">Other</option>
+                </select>
+              </div>
+
+              <div class="hidden">
+                <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="users" data-i18n="users">Expected users / customers</label>
+                <select class="input" id="users" name="users">
+                  <option value="" data-i18n="choose">Choose...</option>
+                  <option value="1-10">1–10</option>
+                  <option value="11-50">11–50</option>
+                  <option value="51-200">51–200</option>
+                  <option value="201-1000">201–1,000</option>
+                  <option value="1000+">1,000+</option>
+                </select>
+              </div>
+
+              <div class="hidden">
+                <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="startDate" data-i18n="startDate">When would you like to start?</label>
+                <select class="input" id="startDate" name="startDate">
+                  <option value="" data-i18n="choose">Choose...</option>
+                  <option value="ASAP" data-i18n="asap">As soon as possible</option>
+                  <option value="This month" data-i18n="thisMonth">This month</option>
+                  <option value="1-3 months" data-i18n="oneThree">1–3 months</option>
+                  <option value="Later" data-i18n="later">Later / exploring</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-[var(--border)]">
+              <label class="block mb-3 text-xs font-bold uppercase tracking-wide text-[var(--muted)]" data-i18n="servicesTitle">What are you looking for?</label>
+              <div class="grid sm:grid-cols-2 gap-3" id="services">
+                <label class="service"><input type="checkbox" value="Website" class="mr-3 w-4 h-4 accent-[#155DFC]">Website</label>
+                <label class="service"><input type="checkbox" value="Booking System" class="mr-3 w-4 h-4 accent-[#155DFC]">Booking System</label>
+                <label class="service"><input type="checkbox" value="DeliveryHub" class="mr-3 w-4 h-4 accent-[#155DFC]">DeliveryHub / Orders</label>
+                <label class="service"><input type="checkbox" value="ERP / CRM" class="mr-3 w-4 h-4 accent-[#155DFC]">ERP / CRM Setup</label>
+                <label class="service"><input type="checkbox" value="Automation" class="mr-3 w-4 h-4 accent-[#155DFC]">Process Automation</label>
+                <label class="service"><input type="checkbox" value="Other" class="mr-3 w-4 h-4 accent-[#155DFC]">Other</label>
+              </div>
+            </div>
+
+            <div>
+              <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="plan" data-i18n="plan">Interested package / plan</label>
+              <input class="input" id="plan" name="plan" data-i18n-placeholder="planPh">
+            </div>
+
+            <div>
+              <label class="block mb-2 text-[11px] font-bold uppercase tracking-[.08em] text-[var(--muted)]" for="requirements" data-i18n="requirements">Tell us what you need</label>
+              <textarea class="input min-h-[120px] resize-y" id="requirements" name="requirements" data-i18n-placeholder="requirementsPh"></textarea>
+            </div>
+
+            <label class="flex items-start gap-3 cursor-pointer text-sm text-[var(--text)] pt-2">
+              <input class="check" type="checkbox" id="consent" name="consent" value="yes" required>
+              <span data-i18n="consent" class="leading-snug">
+                I agree that AlanSM Solutions may contact me about this referral request.
+              </span>
+            </label>
+
+            <div id="errorBox" class="hidden mt-2 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-600 dark:text-red-400 font-medium"></div>
+
+            <button id="submitBtn" type="submit" class="w-full rounded-xl brand-button font-bold py-4 px-5 transition flex items-center justify-center gap-3 text-base mt-4">
+              <span id="submitText" data-i18n="submit">Send referral request</span>
+              <span id="spinner" class="spinner hidden"></span>
+            </button>
+
+            <p class="text-center text-[11px] leading-relaxed text-[var(--muted)]" data-i18n="privacy">
+              Your information is sent securely to AlanSM Solutions for referral follow-up.
+            </p>
+          </form>
+
+          <!-- Success State -->
+          <div id="successBox" class="hidden fade text-center py-16 px-4">
+            <div class="mx-auto h-20 w-20 rounded-full bg-[var(--green)]/10 border border-[var(--green)]/30 flex items-center justify-center text-4xl text-[var(--green)] shadow-[0_0_40px_rgba(0,184,120,.10)] mb-6">
+              <i class="fas fa-check"></i>
+            </div>
+            <h2 class="text-3xl font-extrabold text-white" data-i18n="successTitle">Thank you!</h2>
+            <p class="mt-4 text-[var(--muted)] text-base leading-relaxed max-w-md mx-auto" data-i18n="successText">
+              Your referral request has been received. AlanSM Solutions will contact you shortly.
+            </p>
+            <button id="newRequest" class="mt-8 text-sm font-bold text-[var(--blue)] hover:underline underline-offset-4" data-i18n="newRequest">Send another request</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 lg:mt-20">
+        <div class="max-w-2xl mb-7">
+          <div class="text-[10px] font-bold uppercase tracking-[.2em] text-[#7FA5F7] mb-2">AlanSM Solutions</div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">What happens next?</h2>
+          <p class="mt-2 text-sm leading-relaxed text-[var(--muted)]">A simple, human process from your referral to a clear next step.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div class="step-card rounded-2xl p-5">
+            <div class="step-number w-9 h-9 rounded-xl flex items-center justify-center text-xs font-extrabold">01</div>
+            <h3 class="mt-4 font-bold text-white">Submit</h3><p class="mt-1.5 text-xs leading-relaxed text-[var(--muted)]">Tell us what you are building and what you need.</p>
+          </div>
+          <div class="step-card rounded-2xl p-5">
+            <div class="step-number w-9 h-9 rounded-xl flex items-center justify-center text-xs font-extrabold">02</div>
+            <h3 class="mt-4 font-bold text-white">Review</h3><p class="mt-1.5 text-xs leading-relaxed text-[var(--muted)]">We review your request and the right solution for it.</p>
+          </div>
+          <div class="step-card rounded-2xl p-5">
+            <div class="step-number w-9 h-9 rounded-xl flex items-center justify-center text-xs font-extrabold">03</div>
+            <h3 class="mt-4 font-bold text-white">Connect</h3><p class="mt-1.5 text-xs leading-relaxed text-[var(--muted)]">AlanSM Solutions contacts you directly to discuss it.</p>
+          </div>
+          <div class="step-card rounded-2xl p-5">
+            <div class="step-number w-9 h-9 rounded-xl flex items-center justify-center text-xs font-extrabold">04</div>
+            <h3 class="mt-4 font-bold text-white">Decide</h3><p class="mt-1.5 text-xs leading-relaxed text-[var(--muted)]">Move forward only when the solution makes sense.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mx-auto max-w-7xl px-4 sm:px-6 pb-12 text-center text-xs font-medium text-[var(--muted)]">
+      <div class="border-t border-[var(--border)] pt-8">
+        © <span id="year"></span> AlanSM Solutions. All rights reserved. • Automation & Digital Systems
+      </div>
+    </footer>
+  </main>
+
+  <iframe name="submitFrame" id="submitFrame" class="hidden" title="Submission"></iframe>
+
+<script>
+(() => {
+  'use strict';
+
+  /*
+   * PUBLIC REFERRAL ENDPOINT
+   * This is the user's existing Google Apps Script ERP deployment.
+   */
+  const ENDPOINT =
+    'https://script.google.com/macros/s/AKfycbyqSx9ThK0tfEuGeSay0jJATaA_ZiUeoj-Ag_gEtvG94mMNX_s0z_A4H2CI4_Oql2ynDg/exec';
+
+  const state = {
+    lang: localStorage.getItem('alansm_referral_lang') || null,
+    startedAt: Date.now(),
+    submitted: false
+  };
+
+  const T = {
+    pt: {
+      tagline:'Plataforma & Sistemas',
+      referralBadge:'Convite por indicação',
+      heroTitle:'Transforme sua ideia em um sistema que funciona.',
+      heroText:'Você recebeu uma indicação para conhecer a AlanSM Solutions. Conte-nos o que você quer construir, melhorar ou automatizar — e vamos transformar a ideia em uma solução digital real.',
+      benefit1:'Sem obrigação de compra.',
+      benefit2:'Atendimento 1-a-1 da AlanSM Solutions.',
+      benefit3:'Seus dados são usados exclusivamente para tratar esta solicitação.',
+      referredBy:'Indicado por',
+      formTitle:'Vamos conversar sobre seu projeto',
+      formSubtitle:'Os campos marcados com * são obrigatórios.',
+      fullName:'Nome completo / Empresa *', fullNamePh:'Seu nome completo',
+      email:'E-mail *', emailPh:'seu@email.com',
+      phone:'Telefone / WhatsApp *', phonePh:'+55 ...',
+      company:'Empresa / negócio', companyPh:'Nome da empresa',
+      city:'Cidade', cityPh:'São Sebastião, Kraków...',
+      segment:'Tipo de negócio *', choose:'Escolha...',
+      restaurant:'Restaurante / Alimentação',
+      transport:'Transporte / Mobilidade',
+      professional:'Serviços profissionais / Clínicas',
+      retail:'Varejo / E-commerce',
+      other:'Outro',
+      users:'Usuários / clientes esperados',
+      startDate:'Quando gostaria de começar?',
+      asap:'O mais rápido possível',
+      thisMonth:'Este mês',
+      oneThree:'1–3 meses',
+      later:'Mais tarde / pesquisando',
+      servicesTitle:'O que você procura?',
+      plan:'Pacote / plano de interesse', planPh:'Ex.: Website + Reservas',
+      requirements:'Conte-nos o que você precisa',
+      requirementsPh:'Descreva brevemente seu projeto, problema ou objetivo...',
+      consent:'Concordo que a AlanSM Solutions possa entrar em contato comigo sobre esta solicitação.',
+      submit:'Enviar solicitação de indicação',
+      privacy:'Seus dados são enviados de forma segura para a AlanSM Solutions para acompanhamento da indicação.',
+      successTitle:'Tudo certo!',
+      successText:'Recebemos sua indicação. A AlanSM Solutions entrará em contato em breve para entender o projeto e os próximos passos.',
+      newRequest:'Enviar outra solicitação',
+      errRequired:'Preencha todos os campos obrigatórios.',
+      errEmail:'Digite um e-mail válido.',
+      errConsent:'É necessário aceitar o consentimento de contato.',
+      errSpam:'Não foi possível validar o envio. Aguarde alguns segundos e tente novamente.',
+      errGeneric:'Não foi possível enviar. Verifique os dados e tente novamente.'
+    },
+    en: {
+      tagline:'Platform & Systems',
+      referralBadge:'Referral invitation',
+      heroTitle:'Turn your idea into a system that works.',
+      heroText:'You were referred to AlanSM Solutions by a partner. Tell us what you want to build, improve or automate — and let’s turn the idea into a real digital solution.',
+      benefit1:'No obligation to buy.',
+      benefit2:'Direct 1-on-1 follow-up from AlanSM Solutions.',
+      benefit3:'Your information is used exclusively to handle this request.',
+      referredBy:'Referred by',
+      formTitle:'Let’s talk about your project',
+      formSubtitle:'Fields marked * are required.',
+      fullName:'Full name / Company *', fullNamePh:'Your full name',
+      email:'Email *', emailPh:'you@email.com',
+      phone:'Phone / WhatsApp *', phonePh:'+... ',
+      company:'Company / business', companyPh:'Company name',
+      city:'City', cityPh:'São Sebastião, Kraków...',
+      segment:'Business type *', choose:'Choose...',
+      restaurant:'Restaurant / Food',
+      transport:'Transport / Mobility',
+      professional:'Professional Services / Clinics',
+      retail:'Retail / E-commerce',
+      other:'Other',
+      users:'Expected users / customers',
+      startDate:'When would you like to start?',
+      asap:'As soon as possible',
+      thisMonth:'This month',
+      oneThree:'1–3 months',
+      later:'Later / exploring',
+      servicesTitle:'What are you looking for?',
+      plan:'Interested package / plan', planPh:'e.g. Website + Booking',
+      requirements:'Tell us what you need',
+      requirementsPh:'Briefly describe your project, problem or goal...',
+      consent:'I agree that AlanSM Solutions may contact me about this referral request.',
+      submit:'Send referral request',
+      privacy:'Your information is sent securely to AlanSM Solutions for referral follow-up.',
+      successTitle:'You’re all set.',
+      successText:'Your referral request has been received. AlanSM Solutions will contact you shortly to understand the project and next steps.',
+      newRequest:'Send another request',
+      errRequired:'Please complete all required fields.',
+      errEmail:'Please enter a valid email address.',
+      errConsent:'You must accept the contact consent.',
+      errSpam:'The submission could not be validated. Please wait a few seconds and try again.',
+      errGeneric:'The request could not be sent. Please check your details and try again.'
+    },
+    pl: {
+      tagline:'Platforma & Systemy',
+      referralBadge:'Zaproszenie z polecenia',
+      heroTitle:'Zamień swój pomysł w system, który działa.',
+      heroText:'Nasz partner polecił Ci AlanSM Solutions. Opowiedz nam, co chcesz zbudować, usprawnić lub zautomatyzować — a zamienimy ten pomysł w realne rozwiązanie cyfrowe.',
+      benefit1:'Bez obowiązku zakupu.',
+      benefit2:'Bezpośredni kontakt 1-na-1 z AlanSM Solutions.',
+      benefit3:'Twoje dane są wykorzystywane wyłącznie do obsługi tego zgłoszenia.',
+      referredBy:'Polecił Cię',
+      formTitle:'Porozmawiajmy o Twoim projekcie',
+      formSubtitle:'Pola oznaczone * są wymagane.',
+      fullName:'Imię i nazwisko / Firma *', fullNamePh:'Twoje imię i nazwisko',
+      email:'E-mail *', emailPh:'twoj@email.com',
+      phone:'Telefon / WhatsApp *', phonePh:'+48 ...',
+      company:'Firma / działalność', companyPh:'Nazwa firmy',
+      city:'Miasto', cityPh:'Kraków, Warszawa...',
+      segment:'Rodzaj działalności *', choose:'Wybierz...',
+      restaurant:'Restauracja / Gastronomia',
+      transport:'Transport / Mobilność',
+      professional:'Usługi profesjonalne / Kliniki',
+      retail:'Handel / E-commerce',
+      other:'Inne',
+      users:'Przewidywana liczba użytkowników / klientów',
+      startDate:'Kiedy chcesz rozpocząć?',
+      asap:'Tak szybko, jak to możliwe',
+      thisMonth:'W tym miesiącu',
+      oneThree:'1–3 miesiące',
+      later:'Później / na etapie rozeznania',
+      servicesTitle:'Czego potrzebujesz?',
+      plan:'Interesujący pakiet / plan', planPh:'np. Strona + Rezerwacje',
+      requirements:'Opisz swoje potrzeby',
+      requirementsPh:'Krótko opisz swój projekt, problem lub cel biznesowy...',
+      consent:'Wyrażam zgodę na kontakt ze strony AlanSM Solutions w sprawie tego zgłoszenia.',
+      submit:'Wyślij zgłoszenie z polecenia',
+      privacy:'Twoje dane są bezpiecznie przesyłane do AlanSM Solutions w celu obsługi polecenia.',
+      successTitle:'Gotowe!',
+      successText:'Otrzymaliśmy Twoje zgłoszenie. AlanSM Solutions skontaktuje się z Tobą wkrótce, aby omówić projekt i kolejne kroki.',
+      newRequest:'Wyślij kolejne zgłoszenie',
+      errRequired:'Uzupełnij wszystkie wymagane pola.',
+      errEmail:'Wpisz prawidłowy adres e-mail.',
+      errConsent:'Musisz zaakceptować zgodę na kontakt.',
+      errSpam:'Nie udało się zweryfikować wysyłki. Odczekaj kilka sekund i spróbuj ponownie.',
+      errGeneric:'Nie udało się wysłać zgłoszenia. Sprawdź dane i spróbuj ponownie.'
+    }
+  };
+
+  const $ = id => document.getElementById(id);
+  const t = key => (T[state.lang] && T[state.lang][key]) || T.en[key] || key;
+
+  function applyLanguage() {
+    document.documentElement.lang = state.lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (T[state.lang][key] !== undefined) el.textContent = T[state.lang][key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (T[state.lang][key] !== undefined) el.placeholder = T[state.lang][key];
+    });
+    $('language').value = state.lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === state.lang));
+  }
+
+  function parseReferral() {
+    const qs = new URLSearchParams(location.search);
+    let code = (qs.get('ref') || qs.get('referral') || '').trim();
+    let referrer = (qs.get('referrer') || qs.get('referrerName') || '').trim();
+
+    if (!code) {
+      const parts = location.pathname.split('/').filter(Boolean);
+      const idx = parts.findIndex(x => x.toLowerCase() === 'ref');
+      if (idx >= 0 && parts[idx + 1]) code = parts[idx + 1].trim();
+    }
+
+    if (code && /^[A-Za-z0-9_-]{3,80}$/.test(code)) {
+      $('referralCode').value = code;
+      $('referralCodeView').textContent = 'Code: ' + code;
+      $('referralBox').classList.remove('hidden');
+    }
+    $('referrerNameHidden').value = referrer;
+    if (referrer) {
+      $('referrerName').textContent = referrer;
+      $('referralBox').classList.remove('hidden');
+    }
+  }
+
+  function makeToken() {
+    const bytes = new Uint8Array(18);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  function showError(msg) {
+    const box = $('errorBox');
+    box.textContent = msg;
+    box.classList.remove('hidden');
+    box.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  function hideError() {
+    $('errorBox').classList.add('hidden');
+    $('errorBox').textContent = '';
+  }
+
+  function selectedServices() {
+    return [...document.querySelectorAll('#services input:checked')].map(x => x.value);
+  }
+
+  document.querySelectorAll('.service').forEach(label => {
+    const cb = label.querySelector('input');
+    cb.addEventListener('change', () => label.classList.toggle('selected', cb.checked));
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.lang = btn.dataset.lang;
+      localStorage.setItem('alansm_referral_lang', state.lang);
+      $('languageGate').classList.add('hidden');
+      $('app').classList.remove('hidden');
+      applyLanguage();
+    });
+  });
+
+  $('changeLanguage').addEventListener('click', () => {
+    $('app').classList.add('hidden');
+    $('languageGate').classList.remove('hidden');
+  });
+
+  $('newRequest').addEventListener('click', () => {
+    $('successBox').classList.add('hidden');
+    $('referralForm').classList.remove('hidden');
+    $('referralForm').reset();
+    document.querySelectorAll('.service').forEach(x => x.classList.remove('selected'));
+    state.startedAt = Date.now();
+    $('clientStartedAt').value = String(state.startedAt);
+    $('formToken').value = makeToken();
+    hideError();
+  });
+
+  $('referralForm').addEventListener('submit', e => {
+    e.preventDefault();
+    hideError();
+
+    if (state.submitted) return;
+
+    const form = $('referralForm');
+    if (!form.checkValidity()) {
+      showError(t('errRequired'));
+      form.reportValidity();
+      return;
+    }
+
+    const email = $('email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError(t('errEmail'));
+      $('email').focus();
+      return;
+    }
+
+    if (!$('consent').checked) {
+      showError(t('errConsent'));
+      return;
+    }
+
+    // Anti-bot timing check: humans normally spend more than 1.8 sec on this form.
+    if ((Date.now() - state.startedAt) < 1800) {
+      showError(t('errSpam'));
+      return;
+    }
+
+    // Honeypot must remain empty.
+    if ($('website').value.trim() !== '') {
+      showError(t('errSpam'));
+      return;
+    }
+
+    $('servicesHidden').value = JSON.stringify(selectedServices());
+    $('consentAt').value = new Date().toISOString();
+    $('clientStartedAt').value = String(state.startedAt);
+    $('language').value = state.lang;
+    $('formToken').value = makeToken();
+
+    // The form POST goes directly to Apps Script. A hidden iframe avoids
+    // CORS problems while keeping the admin key out of the browser.
+    form.action = ENDPOINT;
+
+    state.submitted = true;
+    $('submitBtn').disabled = true;
+    $('submitBtn').classList.add('opacity-60','cursor-not-allowed');
+    $('spinner').classList.remove('hidden');
+    $('submitText').textContent =
+      state.lang === 'pt' ? 'Enviando...' :
+      state.lang === 'pl' ? 'Wysyłanie...' : 'Sending...';
+
+    form.submit();
+
+    // Cross-origin form submissions cannot expose the Apps Script response
+    // to this page. We show success after the request has had time to leave.
+    setTimeout(() => {
+      $('referralForm').classList.add('hidden');
+      $('successBox').classList.remove('hidden');
+      $('submitBtn').disabled = false;
+      $('spinner').classList.add('hidden');
+    }, 1200);
+  });
+
+  $('year').textContent = new Date().getFullYear();
+
+  // Start with language gate unless a previous choice exists.
+  parseReferral();
+  state.startedAt = Date.now();
+  $('clientStartedAt').value = String(state.startedAt);
+  $('formToken').value = makeToken();
+
+  if (state.lang && T[state.lang]) {
+    $('languageGate').classList.add('hidden');
+    $('app').classList.remove('hidden');
+    applyLanguage();
+  }
+})();
+</script>
+</body>
+</html>
