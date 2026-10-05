@@ -10,6 +10,32 @@ async function startServer() {
   app.use(express.json());
 
   // API routes FIRST
+  const erpReferralsStore: any[] = [];
+
+  app.get("/api/erp/referrals", (req, res) => {
+    res.json({ success: true, referrals: erpReferralsStore });
+  });
+
+  app.post("/api/erp/referrals", (req, res) => {
+    const { companyName, contactName, phone, email, solutionType } = req.body;
+    if (!companyName || !contactName) {
+      return res.status(400).json({ success: false, error: "Missing required fields" });
+    }
+    const newRef = {
+      id: 'ERP-REF-' + Math.floor(1000 + Math.random() * 9000),
+      companyName,
+      contactName,
+      phone: phone || '',
+      email: email || '',
+      solutionType: solutionType || 'booking',
+      status: 'pending',
+      commissionAmount: '400 PLN',
+      createdAt: new Date().toISOString().split('T')[0]
+    };
+    erpReferralsStore.unshift(newRef);
+    res.json({ success: true, referral: newRef, message: "Successfully synced with ERP backend" });
+  });
+
   app.post("/api/admin/login", (req, res) => {
     const { password } = req.body;
     const correctPassword = (process.env.ADMIN_PASSWORD || "alan_admin_2026").trim();

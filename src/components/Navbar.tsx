@@ -10,8 +10,8 @@ interface NavbarProps {
   onToggleTheme: () => void;
   onOpenContact: (pkg?: string, price?: string) => void;
   onOpenAdmin: () => void;
-  activeSolution: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null;
-  onSelectSolution: (solutionId: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null) => void;
+  activeSolution: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | 'referral' | null;
+  onSelectSolution: (solutionId: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | 'referral' | null) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -39,7 +39,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         deliveryhub: '3. Logistyka DeliveryHub',
         restaurant: '4. System dla Gastronomii',
         tracking: '5. Panel Śledzenia Serwisu',
-        crm: '6. Salesforce CRM Console'
+        crm: '6. Salesforce CRM Console',
+        referral: '7. Program Poleceń (ERP)'
       }
     },
     en: {
@@ -50,7 +51,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         deliveryhub: '3. DeliveryHub Logistics',
         restaurant: '4. Restaurant Dining System',
         tracking: '5. Repair Status Tracker',
-        crm: '6. Salesforce CRM Console'
+        crm: '6. Salesforce CRM Console',
+        referral: '7. Referral Program (ERP)'
       }
     },
     br: {
@@ -61,7 +63,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         deliveryhub: '3. Logística DeliveryHub',
         restaurant: '4. Sistema para Restaurantes',
         tracking: '5. Painel de Ordens e Serviços',
-        crm: '6. Console CRM Salesforce'
+        crm: '6. Console CRM Salesforce',
+        referral: '7. Programa de Indicações (ERP)'
       }
     },
     es: {
@@ -72,7 +75,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         deliveryhub: '3. Logística DeliveryHub',
         restaurant: '4. Sistema de Restaurantes',
         tracking: '5. Rastreo de Reparaciones',
-        crm: '6. Consola CRM Salesforce'
+        crm: '6. Consola CRM Salesforce',
+        referral: '7. Programa de Referidos (ERP)'
       }
     }
   };

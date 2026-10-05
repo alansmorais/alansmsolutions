@@ -13,6 +13,7 @@ import { Footer } from './components/Footer';
 import { SolutionDetailView } from './components/SolutionDetailView';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
 import { FloatingContact } from './components/FloatingContact';
+import { ReferralPage } from './components/ReferralPage';
 
 // Helper to determine initial language from URL path or param or storage
 const getInitialLanguage = (): Language => {
@@ -42,11 +43,11 @@ const getInitialLanguage = (): Language => {
 };
 
 // Helper to determine initial solution from URL
-const getInitialSolution = (): 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null => {
+const getInitialSolution = (): 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | 'referral' | null => {
   if (typeof window !== 'undefined') {
     const params = new URLSearchParams(window.location.search);
     const solutionParam = params.get('solution');
-    if (solutionParam === 'website' || solutionParam === 'booking' || solutionParam === 'deliveryhub' || solutionParam === 'restaurant' || solutionParam === 'tracking' || solutionParam === 'crm') {
+    if (solutionParam === 'website' || solutionParam === 'booking' || solutionParam === 'deliveryhub' || solutionParam === 'restaurant' || solutionParam === 'tracking' || solutionParam === 'crm' || solutionParam === 'referral') {
       return solutionParam;
     }
   }
@@ -98,7 +99,7 @@ const SEO_CONFIG: Record<Language, {
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState<Language>(getInitialLanguage);
-  const [activeSolution, setActiveSolution] = useState<'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null>(getInitialSolution);
+  const [activeSolution, setActiveSolution] = useState<'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | 'referral' | null>(getInitialSolution);
 
   const [theme, setTheme] = useState<Theme>(() => {
     try {
@@ -305,7 +306,7 @@ export default function App() {
     setContactModalOpen(true);
   };
 
-  const handleSelectSolution = (solutionId: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | null) => {
+  const handleSelectSolution = (solutionId: 'website' | 'booking' | 'deliveryhub' | 'restaurant' | 'tracking' | 'crm' | 'referral' | null) => {
     setActiveSolution(solutionId);
     try {
       const url = new URL(window.location.href);
@@ -363,9 +364,16 @@ export default function App() {
 
       {/* Main Content */}
       <main className="space-y-6 md:space-y-8 pt-20 sm:pt-22 pb-8">
-        {activeSolution ? (
+        {activeSolution === 'referral' ? (
+          <ReferralPage 
+            currentLang={currentLang}
+            theme={theme}
+            onBack={() => handleSelectSolution(null)}
+            onOpenContact={handleOpenContact}
+          />
+        ) : activeSolution ? (
           <SolutionDetailView 
-            solutionId={activeSolution}
+            solutionId={activeSolution as any}
             currentLang={currentLang}
             theme={theme}
             onBack={() => handleSelectSolution(null)}
