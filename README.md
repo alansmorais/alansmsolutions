@@ -48,3 +48,4 @@ To run this application, you need to set the following environment variables:
 
 **Developed with Precision by AlanSM Solutions.**
 *Kraków, PL • São Sebastião, BR • Remote*
+<!-- Deployment Trigger: GitHub Actions Build Ready -->
